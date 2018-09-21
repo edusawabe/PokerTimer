@@ -41,7 +41,6 @@ import javafx.util.Duration;
 import model.Player;
 import model.ProjecaoLine;
 import model.RankingLine;
-import model.RebuysConsolidadoLine;
 import model.ResultadoRodada;
 import model.Resumo;
 import model.Round;
@@ -1067,6 +1066,14 @@ public class PokerTimerFXController implements Initializable{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
 	private void play(Event evt){
+		if(oListJogadoresMesa1.isEmpty() && oListJogadoresMesa2.isEmpty() && oListJogadoresMesa3.isEmpty() && oListFora.isEmpty()){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Mesas Não Sorteadas");
+			alert.setContentText("Favor Sortear as Mesas Antes de Iniciar o Torneio.");
+			alert.show();
+			return;
+		}
 		btAdicionaNaoInscrito.setVisible(true);
 		int s = painelInferiorJogadores.getChildren().size();
 		for (int i = 0; i < s; i++) {

@@ -341,7 +341,6 @@ public class PokerTimerFXController implements Initializable{
 
 	@FXML
 	private void adicionaNaoInscrito(Event evt){
-		int s = painelInferiorJogadores.getChildren().size();
 		painelInferiorJogadores.getChildren().add(0, cbJogador);
 		btExcluirJogador.setDisable(true);
 		painelInferiorJogadores.getChildren().add(1, hbBotoesJogadores);

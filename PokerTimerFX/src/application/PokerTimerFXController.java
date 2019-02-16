@@ -428,15 +428,15 @@ public class PokerTimerFXController implements Initializable{
 		qtdeMesa2 = oListJogadoresMesa2.size();
 		qtdeMesa3 = oListJogadoresMesa3.size();
 
-		if(listMesa1.getSelectionModel().getSelectedIndex() > 0){
+		if(listMesa1.getSelectionModel().getSelectedIndex() >= 0){
 			mesaSelecionada = 1;
 		}
 
-		if(listMesa2.getSelectionModel().getSelectedIndex() > 0){
+		if(listMesa2.getSelectionModel().getSelectedIndex() >= 0){
 			mesaSelecionada = 2;
 		}
 
-		if(listMesa3.getSelectionModel().getSelectedIndex() > 0){
+		if(listMesa3.getSelectionModel().getSelectedIndex() >= 0){
 			mesaSelecionada = 3;
 		}
 

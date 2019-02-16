@@ -742,18 +742,18 @@ public class ConfigManager {
 			// B: e C:
 			switch (pos) {
 			case 1:
-				//if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
-				//	resultado = resultado + 6.00;
+				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
+					resultado = resultado + 22.00;
 				resultado = resultado + 10*(qtdeRebuysRodada - rebuys);
 				break;
 			case 2:
-				//if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
-				//	resultado = resultado + 8.00;
+				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
+					resultado = resultado + 20.00;
 				resultado = resultado + 8*(qtdeRebuysRodada - rebuys);
 				break;
 			case 3:
-				//if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
-				//	resultado = resultado + 10.00;
+				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
+					resultado = resultado + 18.00;
 				resultado = resultado + 6*(qtdeRebuysRodada - rebuys);
 				break;
 			case 4:

@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -19,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -394,7 +396,7 @@ public class PokerTimerFXController implements Initializable{
 		destino = gerador.nextInt(maxMesa);
 
 		al.setTitle("Troca de Mesa");
-		al.setContentText("Confirmar Troca:" + "\nMesa " + origem + ": " + "\n - " + olJogadorMesaOrigem.get(origem) + "\nMesa "+destino +": "
+		al.setContentText("Confirmar Troca:" + "\nMesa " + mesaOrigem + ": " + "\n - " + olJogadorMesaOrigem.get(origem) + "\nMesa "+mesaDestino +": "
 				+ "\n - " + olJogadorMesaDestino.get(destino));
 		al.showAndWait();
 		if (al.getResult() == ButtonType.OK) {
@@ -434,7 +436,7 @@ public class PokerTimerFXController implements Initializable{
 			mesaSelecionada = 2;
 		}
 
-		if(listMesa2.getSelectionModel().getSelectedIndex() > 0){
+		if(listMesa3.getSelectionModel().getSelectedIndex() > 0){
 			mesaSelecionada = 3;
 		}
 
@@ -469,10 +471,14 @@ public class PokerTimerFXController implements Initializable{
 			Alert al = new Alert(AlertType.CONFIRMATION);
 			al.setTitle("Selecionar Quantidade de Mesas");
 			al.setContentText("Existe quantidade de jogadores para 3 mesas.\n"
-					+ "Selcione OK para Sortear 3 Mesas ou Cancelar para Sortear 2 Mesas.");
+					+ "Selcione a quantidade de mesas a serem sorteadas.");
 			al.setHeaderText("Selecionar a Quantidae de Mesas.");
+			ButtonType buttonType2 = new ButtonType("2");
+			ButtonType buttonType3 = new ButtonType("3");
+			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+			al.getButtonTypes().setAll(buttonType2,buttonType3,buttonTypeCancel);
 			al.showAndWait();
-			if(al.getResult() == ButtonType.OK){
+			if(al.getResult() == buttonType3){
 				numMesas = 3;
 				sortear3Mesas();
 			} else {
@@ -492,7 +498,7 @@ public class PokerTimerFXController implements Initializable{
 		llMesa2.clear();
 		llMesa3.clear();
 
-		btSortear.setDisable(true);
+		btSortear.setDisable(false);
 		Random gerador = new Random();
 		Random geradorMesa = new Random();
 		ObservableList<String> copyList =  FXCollections.observableArrayList(oListJogadores);
@@ -545,28 +551,47 @@ public class PokerTimerFXController implements Initializable{
 
 	private void sortear3Mesas(){
 		boolean added = false;
-		btSortear.setDisable(true);
+		btSortear.setDisable(false);
 		Random gerador = new Random();
 		Random geradorMesa = new Random();
 		ObservableList<String> copyList =  FXCollections.observableArrayList(oListJogadores);
+		oListJogadoresMesa1.clear();
+		oListJogadoresMesa2.clear();
+		oListJogadoresMesa3.clear();
+		llMesa1.clear();
+		llMesa2.clear();
+		llMesa3.clear();
 
 		int size = oListJogadores.size();
 		int players = oListJogadores.size();
 		int totalSize = oListJogadores.size();
-		int maxMesa = 0;
+		int maxMesa1 = 0;
+		int maxMesa2 = 0;
+		int maxMesa3 = 0;
 		int numero = gerador.nextInt(size);
 		int mesa = geradorMesa.nextInt(900);
 
-		if ((totalSize % 3) == 0)
-			maxMesa = totalSize/3;
-		else
-			maxMesa = (totalSize/3) + 1;
+		if ((totalSize % 3) == 0){
+			maxMesa1 = totalSize/3;
+			maxMesa2 = maxMesa1;
+			maxMesa3 = maxMesa1;
+		} else {
+			if ((totalSize % 3) == 2){
+				maxMesa1 = (totalSize/3) + 1;
+				maxMesa2 = (totalSize/3) + 1;
+				maxMesa3 = (totalSize/3);
+			} else {
+				maxMesa1 = (totalSize/3) + 1;
+				maxMesa2 = (totalSize/3);
+				maxMesa3 = (totalSize/3);
+			}
+		}
 
 		while (size > 0 ){
 			//Se Existe pessoas suficientes para mais de uma mesa
 			if (players > Constants.MAX_PLAYERS_FINAL_TABLE){
 				if(mesa < 301){
-					if (llMesa1.size() < maxMesa){
+					if (llMesa1.size() < maxMesa1){
 						llMesa1.add(copyList.get(numero));
 						added = true;
 					} else {
@@ -574,7 +599,7 @@ public class PokerTimerFXController implements Initializable{
 					}
 				}
 				if(mesa > 300 && mesa < 601){
-					if (llMesa2.size() < maxMesa){
+					if (llMesa2.size() < maxMesa2){
 						llMesa2.add(copyList.get(numero));
 						added = true;
 					} else {
@@ -582,7 +607,7 @@ public class PokerTimerFXController implements Initializable{
 					}
 				}
 				if(mesa > 600 && mesa < 901){
-					if (llMesa3.size() < maxMesa){
+					if (llMesa3.size() < maxMesa3){
 						llMesa3.add(copyList.get(numero));
 						added = true;
 					} else {
@@ -1159,6 +1184,20 @@ public class PokerTimerFXController implements Initializable{
 			btAdicionaNaoInscrito.setDisable(true);
 		}
 		restartTimer();
+		if(roundList.get(currentRound).isBreakRound()){
+			if(oListJogadores.size() > Constants.MAX_PLAYERS_FINAL_TABLE){
+            	Alert al = new Alert(AlertType.CONFIRMATION);
+        		al.setTitle("Realizar Novo Sorteio de Mesas?");
+        		al.setContentText("Round de Break. Deseja realizar um novo sorteio de Mesas?");
+        		al.showAndWait();
+        		if (al.getResult() == ButtonType.OK) {
+        			if(numMesas == 3)
+        				sortear3Mesas();
+        			else
+        				sortear2Mesas();
+        		}
+    		}
+		}
 	}
 
 	@FXML
@@ -1173,9 +1212,24 @@ public class PokerTimerFXController implements Initializable{
 			alert.show();
 		}
 		else{
-			oListRebuys.add(oListJogadores.get(i));
-			atualizarEstatisticas();
-			playRebuy();
+			int cont = 0;
+			for (int j = 0; j < oListRebuys.size(); j++) {
+				if(oListRebuys.get(j).equals(oListJogadores.get(i))){
+					cont++;
+				}
+			}
+			if(cont == 2){
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Máximo de Rebuys Atingido!");
+				alert.setHeaderText("Quantidade de Rebuys Máxima Atingida!");
+				alert.setContentText("Rebuy não permitido. Quantidade Máxima Atingida!");
+				alert.show();
+				return;
+			} else {
+				oListRebuys.add(oListJogadores.get(i));
+				atualizarEstatisticas();
+				playRebuy();
+			}
 		}
 		listJogadores.requestFocus();
 	}
@@ -1278,6 +1332,7 @@ public class PokerTimerFXController implements Initializable{
 					al2Mesa.setWidth(600);
 					al2Mesa.setHeight(400);
 					al2Mesa.show();
+					numMesas = 2;
 					return;
 				}
 			}
@@ -1661,8 +1716,7 @@ public class PokerTimerFXController implements Initializable{
             if (roundList.get(currentRound).isBreakRound()){
             	lbAnteAtual.setText("");
             	valorAnteAtual.setText("BREAK");
-            	}
-            else{
+            } else{
             	valorAnteAtual.setText("");
             	lbAnteAtual.setText("Ante:");
             }
@@ -1686,13 +1740,11 @@ public class PokerTimerFXController implements Initializable{
                 if (roundList.get(currentRound+1).isBreakRound()){
                 	lbAnteSeguinte.setText("");
                 	valorAnteSeguinte.setText("BREAK");
-                	}
-                else{
+                } else{
                 	lbAnteSeguinte.setText("Ante:");
                 	valorAnteAtual.setText("");
                 	}
-        }
-        else{
+        } else{
         	bigSeguinte.setText("");
         	smallSeguinte.setText("");
         	lbAnteSeguinte.setText(" ");
@@ -1752,6 +1804,27 @@ public class PokerTimerFXController implements Initializable{
 					maxRound = minutes * Constants.SECONDS_IN_MINUTE;
 					setCurrentRound();
 					currentSecond = 0;
+					if(roundList.get(currentRound).isBreakRound()){
+						if(oListJogadores.size() > Constants.MAX_PLAYERS_FINAL_TABLE){
+			        		Platform.runLater(new Runnable() {
+
+								@Override
+								public void run() {
+									Alert al = new Alert(AlertType.CONFIRMATION);
+					        		al.setTitle("Realizar Novo Sorteio de Mesas?");
+					        		al.setContentText("Round de Break. Deseja realizar um novo sorteio de Mesas?");
+					        		al.showAndWait();
+					        		if (al.getResult() == ButtonType.OK) {
+					        			if(numMesas == 3)
+					        				sortear3Mesas();
+					        			else
+					        				sortear2Mesas();
+					        		}
+					        		return;
+								}
+							});
+		        		}
+					}
 				}
 			} else {
 				seconds--;
@@ -2125,7 +2198,7 @@ public class PokerTimerFXController implements Initializable{
 		alert.setTitle("Lista de Rebuys Consolidada");
 		alert.setHeaderText("Rebuys Consolidados");
 		TextArea t = new TextArea();
-		t.setFont(new Font("Courrier New", 12));
+		t.setFont(new Font("Courrier New", 20));
 		t.setText(sListRebuys);
 		alert.getDialogPane().setContent(t);
 		alert.setWidth(800);

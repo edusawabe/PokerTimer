@@ -172,7 +172,16 @@ public class PokerTimerFXController implements Initializable{
 	private ObservableList<String> oListJogadoresMesa1 = FXCollections.observableArrayList();
 	private ObservableList<String> oListJogadoresMesa2 = FXCollections.observableArrayList();
 	private ObservableList<String> oListJogadoresMesa3 = FXCollections.observableArrayList();
-	private LinkedList<ControlZManager> lctrZ;
+
+	private ObservableList<String> oListJogadoresBk = FXCollections.observableArrayList();
+	private ObservableList<String> oListRebuysBk = FXCollections.observableArrayList();
+	private ObservableList<String> oListForaBk = FXCollections.observableArrayList();
+	private ObservableList<String> oListrRodadasBk = FXCollections.observableArrayList();
+	private ObservableList<String> oListComboJogadorBk = FXCollections.observableArrayList();
+	private ObservableList<String> oListJogadoresMesa1Bk = FXCollections.observableArrayList();
+	private ObservableList<String> oListJogadoresMesa2Bk = FXCollections.observableArrayList();
+	private ObservableList<String> oListJogadoresMesa3Bk = FXCollections.observableArrayList();
+
     private boolean paused;
     private boolean play;
     private int seconds;

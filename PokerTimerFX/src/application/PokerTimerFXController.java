@@ -689,7 +689,7 @@ public class PokerTimerFXController implements Initializable{
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Projeções");
 
-			lprojecaoLine = configManager.projetarResultado(oListRebuys, oListFora, oListJogadores, oListFora.size() + oListJogadores.size(),0,0,"");
+			lprojecaoLine = configManager.projetarResultado(controlZManager.getCurrentListManager().getoListRebuys(), controlZManager.getCurrentListManager().getoListFora(), controlZManager.getCurrentListManager().getoListJogadores(), controlZManager.getCurrentListManager().getoListFora().size() + controlZManager.getCurrentListManager().getoListJogadores().size(),0,0,"");
 			//lprojecaoLine = ordenarProjecaoRodada(lprojecaoLine);
 
 			// obtem o controller da nova janela
@@ -699,12 +699,12 @@ public class PokerTimerFXController implements Initializable{
 			projecaoController.gettProjecao().setItems(lprojecaoLine);
 
 			projecaoController.setListProjecaoLines(lprojecaoLine);
-			projecaoController.getoListFora().addAll(oListFora);
-			projecaoController.getoListJogadores().addAll(oListJogadores);
-			projecaoController.getoListRebuys().addAll(oListRebuys);
+			projecaoController.getoListFora().addAll(controlZManager.getCurrentListManager().getoListFora());
+			projecaoController.getoListJogadores().addAll(controlZManager.getCurrentListManager().getoListJogadores());
+			projecaoController.getoListRebuys().addAll(controlZManager.getCurrentListManager().getoListRebuys());
 			projecaoController.setConfigManager(configManager);
-			projecaoController.getoListJogando().addAll(oListJogadores);
-			projecaoController.getoListJogando().addAll(oListFora);
+			projecaoController.getoListJogando().addAll(controlZManager.getCurrentListManager().getoListJogadores());
+			projecaoController.getoListJogando().addAll(controlZManager.getCurrentListManager().getoListFora());
 			projecaoController.sortoListJogando();
 			projecaoController.getCbJogadores().setItems(projecaoController.getoListJogando());
 
@@ -715,7 +715,7 @@ public class PokerTimerFXController implements Initializable{
 			projecaoController.getLabel5().setText("R$ "+Math.round(premio5));
 			projecaoController.getLabelAnual().setText("R$ "+Math.round(premioTotal));
 
-			for (int i = 0; i < oListJogadores.size() + oListFora.size(); i++) {
+			for (int i = 0; i < controlZManager.getCurrentListManager().getoListJogadores().size() + controlZManager.getCurrentListManager().getoListFora().size(); i++) {
 				projecaoController.getListComboColocacao().add((i+1) + "º");
 			}
 
@@ -768,27 +768,25 @@ public class PokerTimerFXController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * @param evt
-	 */
+
 	/**
 	 * @param evt
 	 */
 	@FXML
 	private void enviarResultados(Event evt){
-		configManager.updatePlayersResult(oListFora, oListRebuys, total1l, total2l, total3l, total4l, total5l);
+		configManager.updatePlayersResult(controlZManager.getCurrentListManager().getoListFora(), controlZManager.getCurrentListManager().getoListRebuys(), total1l, total2l, total3l, total4l, total5l);
 
 		MailResultContent mailContent = new MailResultContent();
         mailContent.setArrecadado(statsTotalArrecadado.getText());
-        mailContent.setOuts(oListFora);
-        mailContent.setPlayers(oListJogadores);
+        mailContent.setOuts(controlZManager.getCurrentListManager().getoListFora());
+        mailContent.setPlayers(controlZManager.getCurrentListManager().getoListJogadores());
         mailContent.setPremio1(statsPremio1.getText());
         mailContent.setPremio2(statsPremio2.getText());
         mailContent.setPremio3(statsPremio3.getText());
         mailContent.setPremio4(statsPremio4.getText());
         mailContent.setPremio5(statsPremio5.getText());
-        mailContent.setRebuy(oListRebuys);
-        mailContent.setRoundFinal(oListrRodadas.get(listRodadas.getSelectionModel().getSelectedIndex()));
+        mailContent.setRebuy(controlZManager.getCurrentListManager().getoListRebuys());
+        mailContent.setRoundFinal(controlZManager.getCurrentListManager().getoListrRodadas().get(listRodadas.getSelectionModel().getSelectedIndex()));
         String msgHtml = mailContent.toStringCssHtml();
         String msg = mailContent.toString();
         MailSender sender = new MailSender();
@@ -1028,14 +1026,14 @@ public class PokerTimerFXController implements Initializable{
 		//Se existe, remove jogador do combo e adiociona na lista de jogadores
 		//Senão apenas adiciona na lista de jogadores
 		if (index >= 0){
-			Util.addJogadorListaOrdenadamente(cbJogador.getItems().get(index), oListJogadores);
+			Util.addJogadorListaOrdenadamente(cbJogador.getItems().get(index), controlZManager.getCurrentListManager().getoListJogadores());
 			cbJogador.getItems().remove(index);
 		}
 		else {
-			Util.addJogadorListaOrdenadamente(cbJogador.editorProperty().get().getText(), oListJogadores);
+			Util.addJogadorListaOrdenadamente(cbJogador.editorProperty().get().getText(), controlZManager.getCurrentListManager().getoListJogadores());
 		}
-		listJogadores.setItems(oListJogadores);
-		cbJogador.setItems(oListComboJogador);
+		listJogadores.setItems(controlZManager.getCurrentListManager().getoListJogadores());
+		cbJogador.setItems(controlZManager.getCurrentListManager().getoListComboJogador());
 		cbJogador.editorProperty().get().setText("");
 	}
 
@@ -1242,24 +1240,7 @@ public class PokerTimerFXController implements Initializable{
 	private void removeJogadorTorneio(Event evt){
 
 		//Backups
-		oListJogadoresMesa1Bk.clear();
-		oListJogadoresMesa1Bk.addAll(oListJogadoresMesa1);
-		oListJogadoresMesa2Bk.clear();
-		oListJogadoresMesa2Bk.addAll(oListJogadoresMesa2);
-		oListJogadoresMesa3Bk.clear();
-		oListJogadoresMesa3Bk.addAll(oListJogadoresMesa3);
-		oListComboJogadorBk.clear();
-		oListComboJogadorBk.addAll(oListComboJogador);
-		oListForaBk.clear();
-		oListForaBk.addAll(oListFora);
-		oListJogadoresBk.clear();
-		oListJogadoresBk.addAll(oListJogadores);
-		llMesa1BK.clear();
-		llMesa1BK.addAll(llMesa1);
-		llMesa2BK.clear();
-		llMesa2BK.addAll(llMesa2);
-		llMesa3BK.clear();
-		llMesa3BK.addAll(llMesa3);
+		controlZManager.saveState();
 
 		int i = listJogadores.getSelectionModel().getSelectedIndex();
 		int size1, size2, size3, diferenca, posicaoTroca, posicaoEliminacao, mesa, sorteado, sortedSize, result;

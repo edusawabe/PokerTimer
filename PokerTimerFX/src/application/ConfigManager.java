@@ -6,13 +6,13 @@
 package application;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -189,8 +189,8 @@ public class ConfigManager {
 		Date date = new Date();
 		String[] configBackup = configFileName.split(Constants.CONFIG_FILE_NAME_SPLIT);
         BufferedReader reader;
-        BufferedWriter writer;
-        BufferedWriter writer2;
+        OutputStreamWriter writer;
+        OutputStreamWriter writer2;
         JogadorConfigFile j = new JogadorConfigFile();
         boolean newPlayer = true;
         int cont = 0;
@@ -219,8 +219,8 @@ public class ConfigManager {
 			}
             reader.close();
 			if (newPlayer) {
-				writer = new BufferedWriter(new FileWriter(confgFile));
-				writer2 = new BufferedWriter(new FileWriter(configBackup[0] + dateFormat.format(date) + ".txt"));
+				writer = new OutputStreamWriter(new FileOutputStream(confgFile), "windows-1252");
+				writer2 = new OutputStreamWriter(new FileOutputStream(new File (configBackup[0] + dateFormat.format(date) + ".txt")), "windows-1252");
 				writer.write(readLines);
 				writer.flush();
 				writer.close();
@@ -350,8 +350,8 @@ public class ConfigManager {
 		int mesEtapa = Integer.parseInt(DateUtil.getDate().substring(3, 5));
 		String[] configBackup = configFileName.split(Constants.CONFIG_FILE_NAME_SPLIT);
         BufferedReader reader;
-        BufferedWriter writer;
-        BufferedWriter writer2;
+        OutputStreamWriter writer;
+        OutputStreamWriter writer2;
         int cont = 0;
         LinkedList<Player> lPlayer = new LinkedList<Player>();
         JogadorConfigFile j = new JogadorConfigFile();
@@ -436,8 +436,9 @@ public class ConfigManager {
 			}
             reader.close();
 
-            writer = new BufferedWriter(new FileWriter(confgFile));
-            writer2 = new BufferedWriter(new FileWriter(configBackup[0] + dateFormat.format(date) + ".txt"));
+			writer = new OutputStreamWriter(new FileOutputStream(confgFile), "windows-1252");
+			writer2 = new OutputStreamWriter(new FileOutputStream(new File (configBackup[0] + dateFormat.format(date) + ".txt")), "windows-1252");
+
             writer.write(readLines);
             writer.flush();
             writer.close();

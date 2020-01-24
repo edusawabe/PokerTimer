@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 public class MailResultContent {
 
     private ObservableList<String> rebuy;
+    private ObservableList<String> addOn;
     private ObservableList<String> players;
     private ObservableList<String> outs;
     private String resume;
@@ -30,12 +31,21 @@ public class MailResultContent {
     private String premio5;
     private String roundFinal;
     private int rebuys;
+    private int addOns;
 
     public void updateRebuys(){
     	rebuys = 0;
     	for (int i = 0; i < rebuy.size(); i++) {
 	    	if(!rebuy.get(i).contains("BREAK"))
 	    		rebuys++;
+		}
+    }
+
+    public void updateAddOn(){
+    	addOns = 0;
+    	for (int i = 0; i < addOn.size(); i++) {
+	    	if(!addOn.get(i).contains("BREAK"))
+	    		addOns++;
 		}
     }
 
@@ -51,6 +61,13 @@ public class MailResultContent {
      */
     public void setRebuy(ObservableList<String> rebuy) {
         this.rebuy = rebuy;
+    }
+
+    /**
+     * @param rebuy the rebuy to set
+     */
+    public void setAddOn(ObservableList<String> addOn) {
+        this.addOn= addOn;
     }
 
     /**
@@ -514,10 +531,12 @@ ret +
         int r = 0;
 
         updateRebuys();
+        updateAddOn();
         ret =       "===================== Etapa "+ DateUtil.getDate() +"==================================\n";
         ret = ret + "*********************************************************\n";
         ret = ret + "Jogadores           : " + outs.size() + "\n";
         ret = ret + "Rebuys              : " + rebuys + "\n";
+        ret = ret + "addOn               : " + addOns + "\n";
         ret = ret + "Total Arrecadado    : " + arrecadado + "\n";
         ret = ret + "Premiação 1o        : " + getPremio1() + "\n";
         ret = ret + "Premiação 2o        : " + premio2 + "\n";
@@ -530,6 +549,15 @@ ret +
         for (int i = 0; i < rebuy.size(); i++) {
         	if(!rebuy.get(i).contains("BREAK")){
         		ret = ret + "   - " + (r+1) +" "+ rebuy.get(i) + "\n";
+        		r++;
+        	}
+        }
+        r = 0;
+        ret = ret + "*********************************************************\n";
+        ret = ret + "Lista de Add-On     : " + "\n";
+        for (int i = 0; i < addOn.size(); i++) {
+        	if(!addOn.get(i).contains("BREAK")){
+        		ret = ret + "   - " + (r+1) +" "+ addOn.get(i) + "\n";
         		r++;
         	}
         }

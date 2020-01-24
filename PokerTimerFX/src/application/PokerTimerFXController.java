@@ -823,6 +823,7 @@ public class PokerTimerFXController implements Initializable{
         mailContent.setPremio4(statsPremio4.getText());
         mailContent.setPremio5(statsPremio5.getText());
         mailContent.setRebuy(oListRebuys);
+        mailContent.setAddOn(oListAddOn);
         mailContent.setRoundFinal(oListrRodadas.get(listRodadas.getSelectionModel().getSelectedIndex()));
         String msgHtml = mailContent.toStringCssHtml();
         String msg = mailContent.toString();

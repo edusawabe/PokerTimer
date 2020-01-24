@@ -2,6 +2,7 @@ package model;
 
 public class Resumo {
 	private int rebuys = 0;
+	private int addOn = 0;
 	private double totalGasto = 0;
 	private double totalGanho = 0;
 	private double saldo = 0;
@@ -11,6 +12,12 @@ public class Resumo {
 	}
 	public void setRebuys(int rebuys) {
 		this.rebuys = rebuys;
+	}
+	public int getAddOn() {
+		return addOn;
+	}
+	public void setAddOn(int addOn) {
+		this.addOn = addOn;
 	}
 	public double getTotalGasto() {
 		return totalGasto;
@@ -30,5 +37,4 @@ public class Resumo {
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-
 }

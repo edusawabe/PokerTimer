@@ -60,12 +60,15 @@ public class ConfigManager {
 			try {
 				listPlayer = new LinkedList<Player>();
 				confgFile.createNewFile();
+				OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(confgFile), "windows-1252");
+				writer.write("#Jogadores\n#Jogadores");
+				writer.flush();
+				writer.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return;
-			}
+		}
         BufferedReader reader;
         String[] results;
         listPlayer = new LinkedList<>();
@@ -131,10 +134,12 @@ public class ConfigManager {
         listPlayer = new LinkedList<Player>();
         int[] lQtdeJogadoresRodada = new int[12];
         int[] lQtderebuysRodada = new int[12];
+        int[] lQtdeAddOnRodada = new int[12];
 
         for (int i = 0; i < lQtderebuysRodada.length; i++) {
         	lQtdeJogadoresRodada[i] = 0;
-        	lQtderebuysRodada[i] = 0;
+        	lQtderebuysRodada[i]    = 0;
+        	lQtdeAddOnRodada[i]     = 0;
 		}
 
         try {
@@ -157,6 +162,7 @@ public class ConfigManager {
                     	if(!(p.getResultados().get(i).getColocacao().equals("0") || p.getResultados().get(i).getColocacao().equals("00")))
                     		lQtdeJogadoresRodada[i]++;
                     		lQtderebuysRodada[i] += p.getResultados().get(i).getRebuys();
+                    		lQtdeAddOnRodada[i]  += p.getResultados().get(i).getAddOn();
 					}
                     listPlayer.add(p);
                     line = reader.readLine();
@@ -168,6 +174,7 @@ public class ConfigManager {
                 	for (int j = 0; j < lQtdeJogadoresRodada.length; j++) {
                 		listPlayer.get(i).getResultados().get(j).setQtdeJogadores(lQtdeJogadoresRodada[j]);
                 		listPlayer.get(i).getResultados().get(j).setQtderebuysEtapa(lQtderebuysRodada[j]);
+                		listPlayer.get(i).getResultados().get(j).setQtdeAddOnEtapa(lQtdeAddOnRodada[j]);
 					}
                 	listPlayer.get(i).updatePontuacaoTotal();
 				}
@@ -183,7 +190,7 @@ public class ConfigManager {
 	}
 
 	public void addPlayer(String player){
-		String complemento = "; ;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;0@0@0.00@0.00;";
+		String complemento = "; ;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;0@0@0@0.00@0.00;";
 		File confgFile  = new File(configFileName);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
 		Date date = new Date();
@@ -342,7 +349,7 @@ public class ConfigManager {
 	}
 	*/
 
-	public void updatePlayersResult(ObservableList<String> oListFora, ObservableList<String> oListRebuys, double total1l
+	public void updatePlayersResult(ObservableList<String> oListFora, ObservableList<String> oListRebuys, ObservableList<String> oListAddOn,  double total1l
 			, double total2l, double total3l, double total4l, double total5l){
 		File confgFile  = new File(configFileName);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
@@ -378,10 +385,14 @@ public class ConfigManager {
 						p.setPlayerName(j.getNome());
 						p.setPlayerMail(j.getEmail());
 						results = j.getResults();
-						int rebuys = 0, pos = 0;
+						int rebuys = 0, addOn = 0, pos = 0;
 						for (int i = 0; i < oListRebuys.size(); i++) {
 							if(oListRebuys.get(i).equals(p.getPlayerName()))
 								rebuys++;
+						}
+						for (int i = 0; i < oListAddOn.size(); i++) {
+							if(oListAddOn.get(i).equals(p.getPlayerName()))
+								addOn++;
 						}
 						for (int i = 0; i < oListFora.size(); i++) {
 							if(oListFora.get(i).equals(p.getPlayerName())){
@@ -395,29 +406,25 @@ public class ConfigManager {
 							if ((i+1) == mesEtapa){
 								r.setColocacao(Util.completeZeros(pos, 1));
 								r.setRebuys(rebuys);
+								r.setAddOn(addOn);
+								r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, addOn, pos,oListRebuys.size()));
 								switch (pos) {
 								case 1:
-									r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, pos,oListRebuys.size()));
 									r.setPremiacao(total1l);
 									break;
 								case 2:
-									r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, pos,oListRebuys.size()));
 									r.setPremiacao(total2l);
 									break;
 								case 3:
-									r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, pos,oListRebuys.size()));
 									r.setPremiacao(total3l);
 									break;
 								case 4:
-									r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, pos,oListRebuys.size()));
 									r.setPremiacao(total4l);
 									break;
 								case 5:
-									r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, pos,oListRebuys.size()));
 									r.setPremiacao(total5l);
 									break;
 								default:
-									r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, pos,oListRebuys.size()));
 									r.setPremiacao(0.00);
 									break;
 								}
@@ -453,7 +460,7 @@ public class ConfigManager {
 	}
 
 
-	public ObservableList<ProjecaoLine> projetarResultado(ObservableList<String> oListRebuys,
+	public ObservableList<ProjecaoLine> projetarResultado(ObservableList<String> oListRebuys, ObservableList<String> oListAddOn,
 			ObservableList<String> oListFora, ObservableList<String> oListJogadores, int totalJogadores, int colocaocaoPersonilizada, int rebuysMais, String jogadorRebuys) {
 		ObservableList<ProjecaoLine> projecaoList = FXCollections.observableArrayList();
 		ObservableList<ProjecaoLine> projecaoListOrdered = FXCollections.observableArrayList();
@@ -495,6 +502,14 @@ public class ConfigManager {
 				}
 			}
 
+			int addOn = 0;
+			// Obtem a quantidade de addOn
+			for (int i = 0; i < oListAddOn.size(); i++) {
+				if (oListAddOn.get(i).equals(p.getPlayerName())) {
+					addOn++;
+				}
+			}
+
 			// verifica jogador jogando
 			for (int i = 0; i < oListFora.size(); i++) {
 				if (oListFora.get(i).equals(p.getPlayerName())) {
@@ -514,7 +529,7 @@ public class ConfigManager {
 			}
 
 			if (p.getPlayerName().equals(jogadorRebuys)){
-				rebuys = rebuys + rebuysMais;
+				rebuys = rebuys + addOn + rebuysMais;
 			}
 
 			ProjecaoLine pl = new ProjecaoLine();
@@ -525,7 +540,7 @@ public class ConfigManager {
 			for (int k = 0; k < 15; k++) {
 				if(jogando){
 					projecao = Util
-							.arredondar(getPontuacaoJogadorEtapa(totalJogadores, rebuys, k + 1, oListRebuys.size())
+							.arredondar(getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, k + 1, oListRebuys.size())
 									+ p.getPontuacaoTotal());
 				}
 				else{
@@ -583,12 +598,12 @@ public class ConfigManager {
 			}
 			if(jogando){
 				pl.setNestaRodada(Util.completeZeros(posAtual, 2) + "º" + " / "
-						+ getPontuacaoJogadorEtapa(totalJogadores, rebuys, posAtual, oListRebuys.size()));
-				soma = getPontuacaoJogadorEtapa(totalJogadores, rebuys, posAtual, oListRebuys.size());
+						+ getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, posAtual, oListRebuys.size()));
+				soma = getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, posAtual, oListRebuys.size());
 				soma = soma + p.getPontuacaoTotal();
 				pl.setPosRodada("" + Util.completeZerosDouble(Util.arredondar(soma), 3));
 				projecao = Util
-						.arredondar(getPontuacaoJogadorEtapa(totalJogadores, rebuys, colocaocaoPersonilizada, oListRebuys.size())
+						.arredondar(getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, colocaocaoPersonilizada, oListRebuys.size())
 								+ p.getPontuacaoTotal());
 				pl.setProjecaoCustom(Util.completeZerosDouble(projecao, 3));
 			}else{
@@ -700,7 +715,7 @@ public class ConfigManager {
 			C: Cada um dos 8 jogadores da mesa final ganha 20 pontos
 			D: Cada Rebuy realizado vale -15 pontos
 	 */
-	public double getPontuacaoJogadorEtapa(int qtdJogadores, int rebuys, int pos, double premio){
+	public double getPontuacaoJogadorEtapa(int qtdJogadores, int rebuys, int addOn, int pos, double premio){
 		double resultado = 0;
 		if (pos > 0){
 			// A:
@@ -714,7 +729,7 @@ public class ConfigManager {
 				resultado = resultado + 20.00;
 
 			// D:
-			resultado = resultado + (rebuys * (-15.00));
+			resultado = resultado + ((rebuys+addOn) * (-15.00));
 		}
 
 		BigDecimal bd = new BigDecimal(resultado);
@@ -725,75 +740,82 @@ public class ConfigManager {
 	}
 
 	/*
-	 * Pontos = A + B + C + D
-			A: Pontos pela posição inversa:
-				( 3 * qtde de jogadores ) – ( 3 * (posição-1) )
-			B: Pontos pelo prêmio recebido
-				( 0,6 * prêmio recebido em dinheiro )
-			C: Cada um dos 8 jogadores da mesa final ganha 20 pontos
-			D: Cada Rebuy realizado vale -15 pontos
 	 */
-	public double getPontuacaoJogadorEtapa(int qtdJogadores, int rebuys, int pos, int qtdeRebuysRodada){
+	public double getPontuacaoJogadorEtapa(int qtdJogadores, int rebuys, int addOn, int pos, int qtdeRebuysRodada, int qtdeAddOnRodada){
 		double resultado = 0;
 
 		if (pos > 0){
-			// A:
+			// A Pontos pela posição inversa:
 			resultado = ((5 * qtdJogadores) - (5 * (pos - 1)));
 
-			// B: e C:
+			// C Bonus Mesa Final:
+			// B Pontos pela quantidade de Rebuys / Add-ons na Rodada:
 			switch (pos) {
 			case 1:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
-					resultado = resultado + 22.00;
-				resultado = resultado + 10*(qtdeRebuysRodada - rebuys);
+					resultado = resultado + 0;
+				resultado = resultado + 10*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 2:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
-					resultado = resultado + 20.00;
-				resultado = resultado + 8*(qtdeRebuysRodada - rebuys);
+					resultado = resultado + 0;
+				resultado = resultado + 8*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 3:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
-					resultado = resultado + 18.00;
-				resultado = resultado + 6*(qtdeRebuysRodada - rebuys);
+					resultado = resultado + 0;
+				resultado = resultado + 6*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 4:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
 					resultado = resultado + 16.00;
-				resultado = resultado + 4*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 4*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 5:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
 					resultado = resultado + 14.00;
-				resultado = resultado + 3*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 3*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 6:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
 					resultado = resultado + 12.00;
-				resultado = resultado + 3*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 3*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 7:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
 					resultado = resultado + 10.00;
-				resultado = resultado + 3*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 3*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 8:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
 					resultado = resultado + 8.00;
-				resultado = resultado + 3*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 3*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			case 9:
 				if (pos <= Constants.MAX_PLAYERS_FINAL_TABLE)
 					resultado = resultado + 6.00;
-				resultado = resultado + 3*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 3*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			default:
-				resultado = resultado + 1*(qtdeRebuysRodada - rebuys);
+				resultado = resultado + 1*((qtdeRebuysRodada + qtdeAddOnRodada) - (rebuys + addOn));
 				break;
 			}
 
 			// D:
-			resultado = resultado + (rebuys * (Constants.REBUY_PENALTY));
+			switch (rebuys + addOn) {
+			case 0:
+				resultado = resultado + 30.0;
+				break;
+			case 1:
+				resultado = resultado + 20.0;
+				break;
+			case 2:
+				resultado = resultado + 10.0;
+				break;
+			default:
+				resultado = resultado + 0;
+				break;
+			}
 		}
 
 		BigDecimal bd = new BigDecimal(resultado);
@@ -815,17 +837,20 @@ public class ConfigManager {
 	public double getPontuacaoJogadorEtapa(ResultadoRodada r){
 		int qtdJogadores;
 		int rebuys;
+		int addOn;
 		int pos;
 		int rebuysEtapa;
+		int addOnEtapa;
 		double premio;
 
 		pos = Integer.parseInt(r.getColocacao());
 		qtdJogadores = r.getQtdeJogadores();
 		rebuys = r.getRebuys();
+		addOn = r.getAddOn();
 		premio = r.getPremiacao();
 		rebuysEtapa = r.getQtderebuysEtapa();
-
-		return getPontuacaoJogadorEtapa(qtdJogadores, rebuys, pos, rebuysEtapa);
+		addOnEtapa  = r.getQtdeAddOnEtapa();
+		return getPontuacaoJogadorEtapa(qtdJogadores, rebuys, addOn, pos, rebuysEtapa, addOnEtapa);
 	}
 
 	public String getMailList(){

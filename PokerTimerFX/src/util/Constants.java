@@ -17,10 +17,11 @@ public final class Constants {
     public static final int MAX_MINUTES_20 = 20;
     public static final int MAX_MINUTES_BREAK = 15;
     public static final int MAX_ROUNDS = 40;
-    public static final double BUY_IN_VALUE = 30.00;
+    public static final double BUY_IN_VALUE = 40.00;
     public static final double REBUY_VALUE = 40.00;
-    public static final int STACK = 5000;
-    public static final int MAX_REBUY = 99999999;
+    public static final int STACK = 20000;
+    public static final int MAX_REBUY = 2;
+    public static final int MAX_ADDON = 1;
     public static final int SECONDS_IN_MINUTE = 60;
     public static final int CURRENT_MONTH =  0;
     public static final int MAX_ROUND_REBUY = 10;
@@ -29,6 +30,7 @@ public final class Constants {
     public static final int LAST_BREAK_ROUND = 20;
     public static final double SUBSCRIPTION_VALUE = 25.00;
     public static final double REBUY_PENALTY = -0.00;
+    public static final double NO_REBUY_BONUS = .00;
     public static final String CONFIG_FILE_NAME = "./config.csv";
     public static final String CONFIG_FILE_NAME_SPLIT = "\\.c";
     public static final String STAGE_PLAYERS_FILE_NAME = "./StagePlayers.txt";

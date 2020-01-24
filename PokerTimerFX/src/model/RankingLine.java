@@ -19,30 +19,32 @@ public class RankingLine {
 	private SimpleStringProperty total;
 	private SimpleStringProperty totalDescarte;
 	private SimpleStringProperty totalRebuys;
+	private SimpleStringProperty totalAddOn;
 	private SimpleStringProperty totalGasto;
 	private SimpleStringProperty totalGanho;
 	private SimpleStringProperty saldo;
 
 	public RankingLine() {
-		jogador = new SimpleStringProperty();
-		result1 = new SimpleStringProperty();
-		result2 = new SimpleStringProperty();
-		result3 = new SimpleStringProperty();
-		result4 = new SimpleStringProperty();
-		result5 = new SimpleStringProperty();
-		result6 = new SimpleStringProperty();
-		result7 = new SimpleStringProperty();
-		result8 = new SimpleStringProperty();
-		result9 = new SimpleStringProperty();
-		result10 = new SimpleStringProperty();
-		result11 = new SimpleStringProperty();
-		result12 = new SimpleStringProperty();
-		total = new SimpleStringProperty();
+		jogador       = new SimpleStringProperty();
+		result1       = new SimpleStringProperty();
+		result2       = new SimpleStringProperty();
+		result3       = new SimpleStringProperty();
+		result4       = new SimpleStringProperty();
+		result5       = new SimpleStringProperty();
+		result6       = new SimpleStringProperty();
+		result7       = new SimpleStringProperty();
+		result8       = new SimpleStringProperty();
+		result9       = new SimpleStringProperty();
+		result10      = new SimpleStringProperty();
+		result11      = new SimpleStringProperty();
+		result12      = new SimpleStringProperty();
+		total         = new SimpleStringProperty();
 		totalDescarte = new SimpleStringProperty();
-		totalRebuys = new SimpleStringProperty();
-		totalGasto = new SimpleStringProperty();
-		totalGanho = new SimpleStringProperty();
-		saldo = new SimpleStringProperty();
+		totalRebuys   = new SimpleStringProperty();
+		totalAddOn    = new SimpleStringProperty();
+		totalGasto    = new SimpleStringProperty();
+		totalGanho    = new SimpleStringProperty();
+		saldo         = new SimpleStringProperty();
 	}
 
 	public String getJogador() {
@@ -134,6 +136,12 @@ public class RankingLine {
 	}
 	public void setTotalRebuys(String totalRebuys) {
 		this.totalRebuys.set(totalRebuys);
+	}
+	public void setTotalAddOn(String totalAddOn) {
+		this.totalAddOn.set(totalAddOn);
+	}
+	public String getTotalAddOn() {
+		return totalAddOn.get();
 	}
 	public String getTotalGasto() {
 		return totalGasto.get();

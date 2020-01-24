@@ -58,6 +58,7 @@ public class ExcelRankingGenerator {
 		excelManager.getlConlumns().add("Total Gasto");
 		excelManager.getlConlumns().add("Pontuação Total");
 		excelManager.getlConlumns().add("Total Rebuys");
+		excelManager.getlConlumns().add("Total AddOn");
 		excelManager.getlConlumns().add("Max Rebuy no Mês");
 		excelManager.getlConlumns().add("Média Rebuy");
 		excelManager.getlConlumns().add("Meses com Rebuy");
@@ -82,6 +83,7 @@ public class ExcelRankingGenerator {
 			excelManager.getlRowValue().getLast().add("" + Util.arredondar(lPlayer.get(i).getStatistic().getTotalCost()));
 			excelManager.getlRowValue().getLast().add("" + Util.arredondar(lPlayer.get(i).getStatistic().getTotalScore()));
 			excelManager.getlRowValue().getLast().add("" + lPlayer.get(i).getStatistic().getTotalRebuy());
+			//excelManager.getlRowValue().getLast().add("" + lPlayer.get(i).getStatistic().getT());
 			excelManager.getlRowValue().getLast().add("" + lPlayer.get(i).getStatistic().getMaxRebuy());
 			excelManager.getlRowValue().getLast().add("" +  Util.arredondar(lPlayer.get(i).getStatistic().getAvgRebuy()));
 			excelManager.getlRowValue().getLast().add("" + lPlayer.get(i).getStatistic().getNumMonthRebuy());

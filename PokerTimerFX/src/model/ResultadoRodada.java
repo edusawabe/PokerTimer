@@ -7,11 +7,13 @@ import application.ConfigManager;
 
 public class ResultadoRodada {
 	int rebuys;
+	int addOn;
 	String colocacao;
 	double premiacao;
 	double pontuacaoEtapa;
 	int qtdeJogadores;
 	int qtderebuysEtapa;
+	int qtdeAddOnEtapa;
 
 	public double getPontuacaoEtapa() {
 		return getPontuacaoJogadorEtapa();
@@ -31,35 +33,32 @@ public class ResultadoRodada {
 	}
 
 	public ResultadoRodada(String resultado) {
+		parseStringResultado(resultado);
+	}
+
+	private void parseStringResultado(String resultado) {
 		String[] res;
-		res = resultado.split("@");
-		rebuys = Integer.parseInt(res[0]);
-		colocacao = res[1];
-		premiacao = Double.parseDouble(res[2]);
-		pontuacaoEtapa = Double.parseDouble(res[3]);
+		res            = resultado.split("@");
+		rebuys         = Integer.parseInt(res[0]);
+		addOn          = Integer.parseInt(res[1]);
+		colocacao      = res[2];
+		premiacao      = Double.parseDouble(res[3]);
+		pontuacaoEtapa = Double.parseDouble(res[4]);
 	}
 
 	public void getResultadoFromFileLine(String resultado){
-		String[] res;
-		res = resultado.split("@");
-		rebuys = Integer.parseInt(res[0]);
-		colocacao = res[1];
-		premiacao = Double.parseDouble(res[2]);
-		pontuacaoEtapa = Double.parseDouble(res[3]);
+		parseStringResultado(resultado);
 	}
 
 	public String getResultLine(){
 		String res = new String();
-		res =  rebuys + "@" + colocacao + "@" + premiacao + "@" + pontuacaoEtapa;
+		res =  rebuys + "@" + addOn + "@" + colocacao + "@" + premiacao + "@" + pontuacaoEtapa;
 		return res;
 	}
 
 	public double getPontuacaoJogadorEtapa(){
 		ConfigManager config = new ConfigManager();
-		if(qtderebuysEtapa > 0)
-			return config.getPontuacaoJogadorEtapa(qtdeJogadores, rebuys, Integer.parseInt(colocacao), qtderebuysEtapa);
-		else
-			return config.getPontuacaoJogadorEtapa(this);
+		return config.getPontuacaoJogadorEtapa(this);
 	}
 
 	public String getColocacao() {
@@ -93,7 +92,23 @@ public class ResultadoRodada {
 		return qtderebuysEtapa;
 	}
 
+	public int getQtdeAddOnEtapa() {
+		return qtdeAddOnEtapa;
+	}
+
 	public void setQtderebuysEtapa(int qtderebuysEtapa) {
 		this.qtderebuysEtapa = qtderebuysEtapa;
+	}
+
+	public void setQtdeAddOnEtapa(int qtdeAddOnEtapa) {
+		this.qtdeAddOnEtapa = qtdeAddOnEtapa;
+	}
+
+	public int getAddOn() {
+		return addOn;
+	}
+
+	public void setAddOn(int addOn) {
+		this.addOn = addOn;
 	}
 }

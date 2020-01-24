@@ -20,6 +20,7 @@ public class Statistic {
 	private int num5pos;
 	private int numTop3;
 	private int totalRebuy;
+	private int totalAddOn;
 	private double totalPrize;
 	private double totalCost;
 	private double totalScore;
@@ -177,6 +178,13 @@ public class Statistic {
 		this.totalRebuy = totalRebuy;
 	}
 
+	public int getTotalAddOn() {
+		return totalAddOn;
+	}
+
+	public void setTotalAddOn(int totalAddOn) {
+		this.totalAddOn = totalAddOn;
+	}
 
 	public double getTotalScore() {
 		return totalScore;

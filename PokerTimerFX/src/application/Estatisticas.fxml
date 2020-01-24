@@ -30,6 +30,7 @@
                         <TableColumn fx:id="cTotal" editable="false" prefWidth="100.0" text="Total" />
                         <TableColumn fx:id="cTotalDescarte" editable="false" prefWidth="100.0" text="Total c\ Desc." />
                         <TableColumn fx:id="cTotalRebuys" editable="false" prefWidth="63.0" text="Rebuys" />
+                        <TableColumn fx:id="cTotalAddOn" editable="false" prefWidth="63.0" text="AddOn" />
 						<TableColumn fx:id="cTotalGanho" editable="false" prefWidth="100.0" text="Total Ganho" />
                         <TableColumn fx:id="cTotalGasto" editable="false" prefWidth="100.0" text="Total Gasto" />
                         <TableColumn fx:id="cSaldo" editable="false" prefWidth="100.0" text="Saldo" />

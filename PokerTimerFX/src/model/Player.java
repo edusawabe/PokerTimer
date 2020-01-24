@@ -124,16 +124,19 @@ public class Player {
 	public Resumo getResumo(){
 		Resumo resumo = new Resumo();
 		int rebuys = 0;
+		int addOn = 0;
 		double totalGasto = 0, totalGanho = 0, saldo = 0;
 
 		for (int i = 0; i < resultados.size(); i++) {
 			rebuys = rebuys + resultados.get(i).getRebuys();
+			addOn = addOn + resultados.get(i).getAddOn();
 			if ((!resultados.get(i).getColocacao().equals("00")) && (!resultados.get(i).getColocacao().equals("0")))
-				totalGasto = totalGasto + Constants.SUBSCRIPTION_VALUE + Constants.BUY_IN_VALUE + (Constants.REBUY_VALUE * resultados.get(i).getRebuys());
+				totalGasto = totalGasto + Constants.SUBSCRIPTION_VALUE + Constants.BUY_IN_VALUE + (Constants.REBUY_VALUE * (resultados.get(i).getRebuys() + resultados.get(i).getAddOn()));
 			totalGanho = totalGanho + resultados.get(i).getPremiacao();
 		}
 		saldo  = totalGanho - totalGasto;
 		resumo.setRebuys(rebuys);
+		resumo.setAddOn(addOn);
 		resumo.setSaldo(saldo);
 		resumo.setTotalGanho(totalGanho);
 		resumo.setTotalGasto(totalGasto);

@@ -87,6 +87,7 @@ public class ProjecaoController implements Initializable {
 	private ObservableList<String> listComboColocacao;
 	private ObservableList<String> oListJogadores = FXCollections.observableArrayList();
 	private ObservableList<String> oListRebuys = FXCollections.observableArrayList();
+	private ObservableList<String> oListAddOn = FXCollections.observableArrayList();
 	private ObservableList<String> oListFora = FXCollections.observableArrayList();
 	private ObservableList<String> oListJogando = FXCollections.observableArrayList();
 	private ConfigManager configManager;
@@ -141,7 +142,7 @@ public class ProjecaoController implements Initializable {
 		}
 		jogadorSelecionado = cbJogadores.getSelectionModel().getSelectedItem();
 
-		listProjecaoLines = configManager.projetarResultado(oListRebuys, oListFora, oListJogadores,
+		listProjecaoLines = configManager.projetarResultado(oListRebuys, oListAddOn, oListFora, oListJogadores,
 				oListFora.size() + oListJogadores.size(),
 				colocacaoProjecao, rebuys,
 				jogadorSelecionado);

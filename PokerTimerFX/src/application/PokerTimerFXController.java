@@ -78,6 +78,8 @@ public class PokerTimerFXController implements Initializable{
 	@FXML
 	private Label statsRebuys;
 	@FXML
+	private Label statsAddOn;
+	@FXML
 	private Label statsFora;
 	@FXML
 	private Label statsTotalArrecadado;
@@ -124,6 +126,8 @@ public class PokerTimerFXController implements Initializable{
 	@FXML
 	private ListView<String> listRebuys;
 	@FXML
+	private ListView<String> listAddOn;
+	@FXML
 	private ListView<String> listFora;
 	@FXML
 	private ListView<String> listMesa1;
@@ -166,6 +170,7 @@ public class PokerTimerFXController implements Initializable{
 
 	private ObservableList<String> oListJogadores = FXCollections.observableArrayList();
 	private ObservableList<String> oListRebuys = FXCollections.observableArrayList();
+	private ObservableList<String> oListAddOn = FXCollections.observableArrayList();
 	private ObservableList<String> oListFora = FXCollections.observableArrayList();
 	private ObservableList<String> oListrRodadas = FXCollections.observableArrayList();
 	private ObservableList<String> oListComboJogador = FXCollections.observableArrayList();
@@ -175,6 +180,7 @@ public class PokerTimerFXController implements Initializable{
 
 	private ObservableList<String> oListJogadoresBk = FXCollections.observableArrayList();
 	private ObservableList<String> oListRebuysBk = FXCollections.observableArrayList();
+	private ObservableList<String> oListAddOnBk = FXCollections.observableArrayList();
 	private ObservableList<String> oListForaBk = FXCollections.observableArrayList();
 	private ObservableList<String> oListrRodadasBk = FXCollections.observableArrayList();
 	private ObservableList<String> oListComboJogadorBk = FXCollections.observableArrayList();
@@ -266,6 +272,9 @@ public class PokerTimerFXController implements Initializable{
 			listRebuys.requestFocus();
 			break;
 		case "3":
+			listAddOn.requestFocus();
+			break;
+		case "4":
 			listFora.requestFocus();
 			break;
 		case "e":
@@ -284,17 +293,29 @@ public class PokerTimerFXController implements Initializable{
 			if(lastKey.equals("5"))
 				adicionaRebuy(evt);
 			break;
+		case "a":
+			if(lastKey.equals("5"))
+				adicionaAddOn(evt);
+			break;
+		case "A":
+			if(lastKey.equals("5"))
+				adicionaAddOn(evt);
+			break;
 		case "c":
 			if(lastKey.equals("5")){
 				if(listRebuys.isFocused())
-					removeRebuy(evt);
+					removeRebuyOrAddOn(evt);
+				if(listAddOn.isFocused())
+					removeRebuyOrAddOn(evt);
 				if(listFora.isFocused())
 					cancelarRemocaoJogadorTorneio(evt);
 			}
 		case "C":
 			if(lastKey.equals("5")){
 				if(listRebuys.isFocused())
-					removeRebuy(evt);
+					removeRebuyOrAddOn(evt);
+				if(listAddOn.isFocused())
+					removeRebuyOrAddOn(evt);
 				if(listFora.isFocused())
 					cancelarRemocaoJogadorTorneio(evt);
 			}
@@ -703,7 +724,7 @@ public class PokerTimerFXController implements Initializable{
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Projeções");
 
-			lprojecaoLine = configManager.projetarResultado(oListRebuys, oListFora, oListJogadores, oListFora.size() + oListJogadores.size(),0,0,"");
+			lprojecaoLine = configManager.projetarResultado(oListRebuys, oListAddOn, oListFora, oListJogadores, oListFora.size() + oListJogadores.size(),0,0,"");
 			//lprojecaoLine = ordenarProjecaoRodada(lprojecaoLine);
 
 			// obtem o controller da nova janela
@@ -790,7 +811,7 @@ public class PokerTimerFXController implements Initializable{
 	 */
 	@FXML
 	private void enviarResultados(Event evt){
-		configManager.updatePlayersResult(oListFora, oListRebuys, total1l, total2l, total3l, total4l, total5l);
+		configManager.updatePlayersResult(oListFora, oListRebuys,oListAddOn, total1l, total2l, total3l, total4l, total5l);
 
 		MailResultContent mailContent = new MailResultContent();
         mailContent.setArrecadado(statsTotalArrecadado.getText());
@@ -887,22 +908,23 @@ public class PokerTimerFXController implements Initializable{
 				pos = i + 1;
 				RankingLine r = new RankingLine();
 				r.setJogador(util.Util.completeZeros(pos, 2) + "º - " + p.getPlayerName());
-				r.setResult1(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(0).getColocacao()), 2) + "/" + p.getResultados().get(0).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(0).getPontuacaoEtapa(),3));
-				r.setResult2(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(1).getColocacao()), 2) + "/" + p.getResultados().get(1).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(1).getPontuacaoEtapa(),3));
-				r.setResult3(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(2).getColocacao()), 2) + "/" + p.getResultados().get(2).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(2).getPontuacaoEtapa(),3));
-				r.setResult4(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(3).getColocacao()), 2) + "/" + p.getResultados().get(3).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(3).getPontuacaoEtapa(),3));
-				r.setResult5(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(4).getColocacao()), 2) + "/" + p.getResultados().get(4).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(4).getPontuacaoEtapa(),3));
-				r.setResult6(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(5).getColocacao()), 2) + "/" + p.getResultados().get(5).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(5).getPontuacaoEtapa(),3));
-				r.setResult7(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(6).getColocacao()), 2) + "/" + p.getResultados().get(6).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(6).getPontuacaoEtapa(),3));
-				r.setResult8(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(7).getColocacao()), 2) + "/" + p.getResultados().get(7).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(7).getPontuacaoEtapa(),3));
-				r.setResult9(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(8).getColocacao()), 2) + "/" + p.getResultados().get(8).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(8).getPontuacaoEtapa(),3));
-				r.setResult10(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(9).getColocacao()), 2) + "/" + p.getResultados().get(9).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(9).getPontuacaoEtapa(),3));
-				r.setResult11(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(10).getColocacao()), 2) + "/" + p.getResultados().get(10).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(10).getPontuacaoEtapa(),3));
-				r.setResult12(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(11).getColocacao()), 2) + "/" + p.getResultados().get(11).getRebuys() + "/" + Util.completeZerosDouble(p.getResultados().get(11).getPontuacaoEtapa(),3));
+				r.setResult1(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(0).getColocacao()), 2)   + "/" + p.getResultados().get(0).getRebuys() + "/" + p.getResultados().get(0).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(0).getPontuacaoEtapa(),3));
+				r.setResult2(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(1).getColocacao()), 2)   + "/" + p.getResultados().get(1).getRebuys() + "/" + p.getResultados().get(1).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(1).getPontuacaoEtapa(),3));
+				r.setResult3(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(2).getColocacao()), 2)   + "/" + p.getResultados().get(2).getRebuys() + "/" + p.getResultados().get(2).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(2).getPontuacaoEtapa(),3));
+				r.setResult4(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(3).getColocacao()), 2)   + "/" + p.getResultados().get(3).getRebuys() + "/" + p.getResultados().get(3).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(3).getPontuacaoEtapa(),3));
+				r.setResult5(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(4).getColocacao()), 2)   + "/" + p.getResultados().get(4).getRebuys() + "/" + p.getResultados().get(4).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(4).getPontuacaoEtapa(),3));
+				r.setResult6(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(5).getColocacao()), 2)   + "/" + p.getResultados().get(5).getRebuys() + "/" + p.getResultados().get(5).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(5).getPontuacaoEtapa(),3));
+				r.setResult7(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(6).getColocacao()), 2)   + "/" + p.getResultados().get(6).getRebuys() + "/" + p.getResultados().get(6).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(6).getPontuacaoEtapa(),3));
+				r.setResult8(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(7).getColocacao()), 2)   + "/" + p.getResultados().get(7).getRebuys() + "/" + p.getResultados().get(7).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(7).getPontuacaoEtapa(),3));
+				r.setResult9(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(8).getColocacao()), 2)   + "/" + p.getResultados().get(8).getRebuys() + "/" + p.getResultados().get(8).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(8).getPontuacaoEtapa(),3));
+				r.setResult10(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(9).getColocacao()), 2)  + "/" + p.getResultados().get(9).getRebuys() + "/" + p.getResultados().get(9).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(9).getPontuacaoEtapa(),3));
+				r.setResult11(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(10).getColocacao()), 2) + "/" + p.getResultados().get(10).getRebuys() + "/" + p.getResultados().get(10).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(10).getPontuacaoEtapa(),3));
+				r.setResult12(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(11).getColocacao()), 2) + "/" + p.getResultados().get(11).getRebuys() + "/" + p.getResultados().get(11).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(11).getPontuacaoEtapa(),3));
 				resumo = p.getResumo();
 				r.setTotal("" + Util.completeZerosDouble(p.getPontuacaoTotal(),4));
 				r.setTotalDescarte("" + Util.completeZerosDouble(p.getPontuacaoTotalComDescarte(),4));
 				r.setTotalRebuys(""+resumo.getRebuys());
+				r.setTotalAddOn(""+resumo.getAddOn());
 				r.setTotalGanho("R$ " + resumo.getTotalGanho());
 				r.setTotalGasto("R$ -" + resumo.getTotalGasto());
 				r.setSaldo("R$ " + resumo.getSaldo());
@@ -1218,7 +1240,7 @@ public class PokerTimerFXController implements Initializable{
 					cont++;
 				}
 			}
-			if(cont == 2){
+			if(cont == Constants.MAX_REBUY){
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Máximo de Rebuys Atingido!");
 				alert.setHeaderText("Quantidade de Rebuys Máxima Atingida!");
@@ -1235,7 +1257,50 @@ public class PokerTimerFXController implements Initializable{
 	}
 
 	@FXML
-	private void removeRebuy(Event evt){
+	private void adicionaAddOn(Event evt){
+
+		int i = listJogadores.getSelectionModel().getSelectedIndex();
+		if (i < 0){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Selecionar Jogador");
+			alert.setContentText("Favor Selecionar Jogador do Add-On");
+			alert.show();
+		}
+		else{
+			int cont = 0;
+			for (int j = 0; j < oListAddOn.size(); j++) {
+				if(oListAddOn.get(j).equals(oListJogadores.get(i))){
+					cont++;
+				}
+			}
+			if(cont == 1){
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Máximo de Add-On Atingido!");
+				alert.setHeaderText("Quantidade de Rebuys Máxima Atingida!");
+				alert.setContentText("Add-On não permitido. Quantidade Máxima Atingida!");
+				alert.show();
+				return;
+			} else {
+				oListAddOn.add(oListJogadores.get(i));
+				atualizarEstatisticas();
+				playRebuy();
+			}
+		}
+		listJogadores.requestFocus();
+	}
+
+	@FXML
+	private void removeRebuyOrAddOn(Event evt){
+		if(listRebuys.getFocusModel().getFocusedIndex() >= 0)
+			removeRebuy();
+
+		if(listAddOn.getFocusModel().getFocusedIndex() >= 0)
+			removeAddOn();
+	}
+
+	@FXML
+	private void removeRebuy(){
 		int i = listRebuys.getSelectionModel().getSelectedIndex();
 		if (i < 0){
 			Alert alert = new Alert(AlertType.ERROR);
@@ -1246,6 +1311,24 @@ public class PokerTimerFXController implements Initializable{
 		}
 		else{
 			oListRebuys.remove(i);
+			atualizarEstatisticas();
+			playCancelRebuy();
+		}
+		listJogadores.requestFocus();
+	}
+
+	@FXML
+	private void removeAddOn(){
+		int i = listAddOn.getSelectionModel().getSelectedIndex();
+		if (i < 0){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Selecionar Jogador");
+			alert.setContentText("Favor Selecionar Jogador a Cancelar Add On");
+			alert.show();
+		}
+		else{
+			oListAddOn.remove(i);
 			atualizarEstatisticas();
 			playCancelRebuy();
 		}
@@ -1627,6 +1710,7 @@ public class PokerTimerFXController implements Initializable{
 		listMesa2.setItems(oListJogadoresMesa2);
 		listFora.setItems(oListFora);
 		listRebuys.setItems(oListRebuys);
+		listAddOn.setItems(oListAddOn);
 		llMesa1 = new LinkedList<>();
 		llMesa1BK = new LinkedList<>();
 		llMesa2 = new LinkedList<>();
@@ -1955,6 +2039,7 @@ public class PokerTimerFXController implements Initializable{
 	public void atualizarEstatisticas(){
         int totalJogadores = (oListJogadores.size() + oListFora.size());
         int totalRebuy = oListRebuys.size();
+        int totalAddOn = oListAddOn.size();
         int totalJogando = oListJogadores.size();
         int totalFora = oListFora.size();
         int totalMesa1 = oListJogadoresMesa1.size();
@@ -2006,9 +2091,11 @@ public class PokerTimerFXController implements Initializable{
         statsJogando.setText("" + totalJogando  + "/" + totalJogadores);
         statsFora.setText("" +  totalFora +  "/" + totalJogadores);
         statsRebuys.setText("" + totalRebuy);
+        statsAddOn.setText("" + totalAddOn);
 
         totalArrecadado = ((totalJogadores * Constants.BUY_IN_VALUE)
-                + (totalRebuy * Constants.REBUY_VALUE));
+                + (totalRebuy * Constants.REBUY_VALUE)
+                + (totalAddOn * Constants.REBUY_VALUE));
         statsTotalArrecadado.setText("R$ " + totalArrecadado);
 
         double total1 = 0;
@@ -2069,7 +2156,7 @@ public class PokerTimerFXController implements Initializable{
         statsPremio4.setText("R$ " + total4l);
         statsPremio5.setText("R$ " + total5l);
         if (totalJogando > 0)
-        	statsMedia.setText(NumberMaskFormatter.formatMask(((totalJogadores + totalRebuy) * Constants.STACK)/totalJogando));
+        	statsMedia.setText(NumberMaskFormatter.formatMask(((totalJogadores + totalRebuy) * Constants.STACK + (totalAddOn * (2 * Constants.STACK))) /totalJogando));
 
         if(timerWindowController != null){
 	        timerWindowController.getLbTimer().setText(lbTimer.getText());
@@ -2176,13 +2263,19 @@ public class PokerTimerFXController implements Initializable{
 			}
 	*/
 		LinkedList<String> lRebuys = new LinkedList<String>();
+		LinkedList<String> lAddOn = new LinkedList<String>();
 		int contRebuys;
 		String currentPlayer;
-		String sListRebuys = "";
+		String sListRebuys = "Rebuys:\n";
+		String sListAddOn = "AddOn:\n";
 
 		for (int i = 0; i < oListRebuys.size(); i++) {
 			if(lRebuys.indexOf(oListRebuys.get(i)) < 0)
 				lRebuys.add(oListRebuys.get(i));
+		}
+
+		for (int i = 0; i < oListAddOn.size(); i++) {
+			sListAddOn = sListAddOn + oListAddOn.get(i) + "\n";
 		}
 
 		for (int k = 0; k < lRebuys.size(); k++) {
@@ -2194,6 +2287,8 @@ public class PokerTimerFXController implements Initializable{
 			}
 			sListRebuys = sListRebuys + currentPlayer + " - " + contRebuys + "\n";
 		}
+		sListRebuys = sListRebuys + "\n\n" + sListAddOn;
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Lista de Rebuys Consolidada");
 		alert.setHeaderText("Rebuys Consolidados");

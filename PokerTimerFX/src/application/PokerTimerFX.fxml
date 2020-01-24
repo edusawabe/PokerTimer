@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#tratarEventosTeclado" onMouseMoved="#mousePainelInferior" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PokerTimerFXController">
+<AnchorPane fx:id="parent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#tratarEventosTeclado" onMouseMoved="#mousePainelInferior" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PokerTimerFXController">
    <children>
       <VBox AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -189,6 +189,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="19.0" minHeight="4.0" prefHeight="4.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -206,13 +207,13 @@
                                        </font>
                                     </Label>
                                     <Label alignment="CENTER_RIGHT" styleClass="statsLabels" stylesheets="@application.css" text="Rebuys:" GridPane.rowIndex="1" />
-                                    <Label alignment="CENTER_RIGHT" styleClass="statsLabels" stylesheets="@application.css" text="Fora:" GridPane.rowIndex="2" />
-                                    <Label alignment="CENTER_RIGHT" styleClass="statsLabels" stylesheets="@application.css" text="Total Arrecadado:" GridPane.rowIndex="4" />
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="73.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 1º:" GridPane.rowIndex="5" />
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="91.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 2º:" GridPane.rowIndex="6" />
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="109.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 4º:" GridPane.rowIndex="8" />
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="133.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 3º:" GridPane.rowIndex="7" />
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="133.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 5º:" GridPane.rowIndex="9" />
+                                    <Label alignment="CENTER_RIGHT" styleClass="statsLabels" stylesheets="@application.css" text="Fora:" GridPane.rowIndex="3" />
+                                    <Label alignment="CENTER_RIGHT" styleClass="statsLabels" stylesheets="@application.css" text="Total Arrecadado:" GridPane.rowIndex="5" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="73.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 1º:" GridPane.rowIndex="6" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="91.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 2º:" GridPane.rowIndex="7" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="109.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 4º:" GridPane.rowIndex="9" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="133.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 3º:" GridPane.rowIndex="8" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="133.0" styleClass="statsLabels" stylesheets="@application.css" text="Premiação 5º:" GridPane.rowIndex="10" />
                                     <Label fx:id="statsJogando" layoutX="10.0" layoutY="6.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
@@ -229,7 +230,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsFora" layoutX="171.0" layoutY="25.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <Label fx:id="statsFora" layoutX="171.0" layoutY="25.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -237,7 +238,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsTotalArrecadado" layoutX="171.0" layoutY="44.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label fx:id="statsTotalArrecadado" layoutX="171.0" layoutY="44.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -245,7 +246,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsPremio1" layoutX="161.0" layoutY="82.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <Label fx:id="statsPremio1" layoutX="161.0" layoutY="82.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -253,7 +254,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsPremio2" layoutX="161.0" layoutY="101.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                    <Label fx:id="statsPremio2" layoutX="161.0" layoutY="101.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -261,7 +262,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsPremio3" layoutX="161.0" layoutY="120.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                    <Label fx:id="statsPremio3" layoutX="161.0" layoutY="120.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -269,7 +270,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsPremio4" layoutX="161.0" layoutY="139.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                    <Label fx:id="statsPremio4" layoutX="161.0" layoutY="139.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -277,7 +278,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="statsPremio5" layoutX="161.0" layoutY="158.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                    <Label fx:id="statsPremio5" layoutX="161.0" layoutY="158.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -285,8 +286,17 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="82.0" styleClass="statsLabels" stylesheets="@application.css" text="Média Fichas:" GridPane.rowIndex="11" />
-                                    <Label fx:id="statsMedia" layoutX="171.0" layoutY="177.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="82.0" styleClass="statsLabels" stylesheets="@application.css" text="Média Fichas:" GridPane.rowIndex="12" />
+                                    <Label fx:id="statsMedia" layoutX="171.0" layoutY="177.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="99.0" layoutY="42.0" styleClass="statsLabels" stylesheets="@application.css" text="Add-on:" GridPane.rowIndex="2" />
+                                    <Label fx:id="statsAddOn" layoutX="171.0" layoutY="42.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -483,9 +493,6 @@
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
-                     <center>
-                        <ListView fx:id="listRebuys" BorderPane.alignment="CENTER" />
-                     </center>
                      <top>
                         <Label text="Rebuys:" BorderPane.alignment="TOP_LEFT">
                            <font>
@@ -498,14 +505,14 @@
                            <children>
                               <HBox alignment="TOP_CENTER">
                                  <children>
-                                    <Button fx:id="btExcluirRebuy" mnemonicParsing="false" onAction="#removeRebuy" prefWidth="117.0" text="Cancelar">
+                                    <Button fx:id="btExcluirRebuy1" mnemonicParsing="false" onAction="#removeAddOn" text="Cancel">
                                        <HBox.margin>
-                                          <Insets right="5.0" />
+                                          <Insets left="5.0" right="5.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="btAdicionaRebuy" mnemonicParsing="false" onAction="#adicionaRebuy" prefWidth="139.0" text="Adiciona">
+                                    <Button mnemonicParsing="false" onAction="#adicionaAddOn" text="Add-On">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="5.0" right="5.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>
@@ -520,6 +527,35 @@
                            </BorderPane.margin>
                         </VBox>
                      </bottom>
+                     <center>
+                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ListView fx:id="listRebuys" />
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="btExcluirRebuy" mnemonicParsing="false" onAction="#removeRebuy" text="Cancel" />
+                                    <Button fx:id="btAdicionaRebuy" mnemonicParsing="false" onAction="#adicionaRebuy" text="Rebuy">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label text="Add-On:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ListView fx:id="listAddOn" />
+                           </children>
+                        </VBox>
+                     </center>
                   </BorderPane>
                   <BorderPane>
                      <center>

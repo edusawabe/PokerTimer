@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -19,9 +20,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.commons.collections4.map.HashedMap;
+import org.apache.log4j.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +46,7 @@ public class ConfigManager {
     private String playersFileName;
     private LinkedList<Player> listPlayer;
     private LinkedList<String> registeredPlayers;
+    private static Logger logger = Logger.getLogger(ConfigManager.class);
 
     public LinkedList<Player> getListPlayer() {
 		return listPlayer;
@@ -65,8 +69,7 @@ public class ConfigManager {
 				writer.flush();
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
         BufferedReader reader;
@@ -121,9 +124,9 @@ public class ConfigManager {
             	listPlayer.addAll(ltmp);
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(ex);
         } catch (IOException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         }
     }
 
@@ -183,9 +186,9 @@ public class ConfigManager {
             reader.close();
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         } catch (IOException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         }
 	}
 
@@ -236,9 +239,9 @@ public class ConfigManager {
 				writer2.close();
 			}
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         } catch (IOException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         }
 	}
 
@@ -407,7 +410,7 @@ public class ConfigManager {
 								r.setColocacao(Util.completeZeros(pos, 1));
 								r.setRebuys(rebuys);
 								r.setAddOn(addOn);
-								r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), rebuys, addOn, pos,oListRebuys.size()));
+								r.setPontuacaoEtapa(getPontuacaoJogadorEtapa(oListFora.size(), pos, oListRebuys.size(), oListAddOn.size()));
 								switch (pos) {
 								case 1:
 									r.setPremiacao(total1l);
@@ -453,9 +456,9 @@ public class ConfigManager {
             writer2.flush();
             writer2.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         } catch (IOException ex) {
-            Logger.getLogger(ConfigManager.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error(ex);
         }
 	}
 
@@ -540,7 +543,7 @@ public class ConfigManager {
 			for (int k = 0; k < 15; k++) {
 				if(jogando){
 					projecao = Util
-							.arredondar(getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, k + 1, oListRebuys.size())
+							.arredondar(getPontuacaoJogadorEtapa(totalJogadores, k + 1, oListRebuys.size(), oListAddOn.size())
 									+ p.getPontuacaoTotal());
 				}
 				else{
@@ -598,12 +601,12 @@ public class ConfigManager {
 			}
 			if(jogando){
 				pl.setNestaRodada(Util.completeZeros(posAtual, 2) + "º" + " / "
-						+ getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, posAtual, oListRebuys.size()));
-				soma = getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, posAtual, oListRebuys.size());
+						+ getPontuacaoJogadorEtapa(totalJogadores, posAtual, oListRebuys.size(), oListAddOn.size()));
+				soma = getPontuacaoJogadorEtapa(totalJogadores, posAtual, oListRebuys.size(), oListAddOn.size());
 				soma = soma + p.getPontuacaoTotal();
 				pl.setPosRodada("" + Util.completeZerosDouble(Util.arredondar(soma), 3));
 				projecao = Util
-						.arredondar(getPontuacaoJogadorEtapa(totalJogadores, rebuys, addOn, colocaocaoPersonilizada, oListRebuys.size())
+						.arredondar(getPontuacaoJogadorEtapa(totalJogadores, colocaocaoPersonilizada, oListRebuys.size(), oListAddOn.size())
 								+ p.getPontuacaoTotal());
 				pl.setProjecaoCustom(Util.completeZerosDouble(projecao, 3));
 			}else{
@@ -688,11 +691,9 @@ public class ConfigManager {
 	            }
 	            reader.close();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e);
 			}
 		}
 	}
@@ -715,6 +716,7 @@ public class ConfigManager {
 			C: Cada um dos 8 jogadores da mesa final ganha 20 pontos
 			D: Cada Rebuy realizado vale -15 pontos
 	 */
+	/*
 	public double getPontuacaoJogadorEtapa(int qtdJogadores, int rebuys, int addOn, int pos, double premio){
 		double resultado = 0;
 		if (pos > 0){
@@ -738,6 +740,7 @@ public class ConfigManager {
 
 		return resultado;
 	}
+	*/
 
 	/*
 	 */
@@ -826,6 +829,41 @@ public class ConfigManager {
 	}
 
 	/*
+	 * Nova regra de pontuação 2021
+	 * Pontuacao fixa por posição mais a quantidade de pessoas na rodada
+	 */
+	public double getPontuacaoJogadorEtapa(int qtdeJogadores, int posicao, int qtdeRebuys, int qtdeAddOn){
+		double resultado = 0;
+		if (posicao == 0)
+			return resultado;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File("configPontuacao.csv")));
+			String consideraRebuy = reader.readLine();
+			String consideraAddOn = reader.readLine();
+			HashMap<String,Integer> mapPontuacao = new HashMap<String,Integer>();
+			String line = reader.readLine();
+			String[] tmp;
+			while (line != null){
+				tmp = line.split(";");
+				mapPontuacao.put(tmp[0], new Integer(tmp[1]));
+				line = reader.readLine();
+			}
+			reader.close();
+			if (consideraRebuy.contains("Sim")){
+				qtdeJogadores = qtdeJogadores + qtdeRebuys;
+			}
+			if (consideraAddOn.contains("Sim")){
+				qtdeJogadores = qtdeJogadores + qtdeAddOn;
+			}
+			return qtdeJogadores + mapPontuacao.get(""+posicao).intValue();
+		} catch (IOException e) {
+			logger.error(e);
+		}
+
+		return resultado;
+	}
+
+	/*
 	 * Pontos = A + B + C + D
 			A: Pontos pela posição inversa:
 				( 3 * qtde de jogadores ) – ( 3 * (posição-1) )
@@ -850,7 +888,9 @@ public class ConfigManager {
 		premio = r.getPremiacao();
 		rebuysEtapa = r.getQtderebuysEtapa();
 		addOnEtapa  = r.getQtdeAddOnEtapa();
-		return getPontuacaoJogadorEtapa(qtdJogadores, rebuys, addOn, pos, rebuysEtapa, addOnEtapa);
+		//return getPontuacaoJogadorEtapa(qtdJogadores, rebuys, addOn, pos, rebuysEtapa, addOnEtapa);
+		//Nova Pontuacao 2021
+		return getPontuacaoJogadorEtapa(qtdJogadores, pos, rebuysEtapa, addOnEtapa);
 	}
 
 	public String getMailList(){

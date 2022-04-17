@@ -33,7 +33,6 @@ public class RoundManager {
 			}
 			reader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 			return;
 		}
 

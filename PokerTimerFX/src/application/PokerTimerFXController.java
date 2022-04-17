@@ -1676,34 +1676,7 @@ public class PokerTimerFXController implements Initializable{
 				Util.addJogadorListaOrdenadamente(lp.get(i).getPlayerName(), oListComboJogador);
 		}
 
-		//Define a lista de rounds do Torneio
-		roundList = new LinkedList<Round>();
-		roundManager = new RoundManager();
-		//construindo lista de rounds
-		roundManager.setRoundList(roundList);
-		roundManager.setRoundListValues();
-
-		//Definindo CellFactory da Listview das Rodadas
-		listRodadas.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-			@Override
-			public ListCell<String> call(ListView<String> param) {
-				return new MyListCell();
-			}
-		});
-
-		//Alimentando valores na lista de rodadas
-		for (int i = 0; i < roundList.size(); i++) {
-			oListrRodadas.add(roundList.get(i).getRoundName());
-		}
-
-		currentRound = 0;
-		listRodadas.setItems(oListrRodadas);
-		listRodadas.getSelectionModel().select(currentRound);
-
-		//Desabilita edição e seleção da lista de rodadas
-		listRodadas.setEditable(false);
-		//listRodadas.setMouseTransparent(true);
-		//listRodadas.setFocusTraversable(false);
+		updateRoundList();
 
 		//Define Demais Listas
 		listJogadores.setItems(oListJogadores);
@@ -1779,6 +1752,41 @@ public class PokerTimerFXController implements Initializable{
 			} catch(Exception e){
 				e.printStackTrace();
 			}
+	}
+
+	private void updateRoundList() {
+		//Define a lista de rounds do Torneio
+		roundList = new LinkedList<Round>();
+		roundManager = new RoundManager();
+		//construindo lista de rounds
+		roundManager.setRoundList(roundList);
+		roundManager.setRoundListValues();
+
+		if (roundList.size() > 0){
+			oListrRodadas.clear();
+		}
+
+		//Definindo CellFactory da Listview das Rodadas
+		listRodadas.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+			@Override
+			public ListCell<String> call(ListView<String> param) {
+				return new MyListCell();
+			}
+		});
+
+		//Alimentando valores na lista de rodadas
+		for (int i = 0; i < roundList.size(); i++) {
+			oListrRodadas.add(roundList.get(i).getRoundName());
+		}
+
+		currentRound = 0;
+		listRodadas.setItems(oListrRodadas);
+		listRodadas.getSelectionModel().select(currentRound);
+
+		//Desabilita edição e seleção da lista de rodadas
+		listRodadas.setEditable(false);
+		//listRodadas.setMouseTransparent(true);
+		//listRodadas.setFocusTraversable(false);
 	}
 
     private void setRound(){
@@ -1863,6 +1871,7 @@ public class PokerTimerFXController implements Initializable{
     }
 
 	private void timerAction() {
+		updateRoundList();
 		if (!paused && play){
 			if (seconds == 17 && minutes == 0) {
 				playCountdown();

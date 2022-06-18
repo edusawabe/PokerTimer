@@ -829,7 +829,6 @@ public class PokerTimerFXController implements Initializable{
         mailContent.setRoundFinal(oListrRodadas.get(listRodadas.getSelectionModel().getSelectedIndex()));
         String msgHtml = mailContent.toStringCssHtml();
         String msg = mailContent.toString();
-        MailSender sender = new MailSender();
         String subject = "Resultados Etapa "+ DateUtil.getDate();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -2324,8 +2323,8 @@ public class PokerTimerFXController implements Initializable{
 
 	public ObservableList<ProjecaoLine> ordenarProjecaoRodada(ObservableList<ProjecaoLine> l) {
 		LinkedList<ProjecaoLine> lOrdered = new LinkedList<ProjecaoLine>();
-		Double d1 = new Double(0.0);
-		Double d2 = new Double(0.0);
+		Double d1 = Double.valueOf(0.0);
+		Double d2 = Double.valueOf(0.0);
 
 		// prepara os dados do jogador e rodadas
 		for (int i = 0; i < l.size(); i++) {
@@ -2337,7 +2336,7 @@ public class PokerTimerFXController implements Initializable{
 				for (int j = 0; j < lOrdered.size(); j++) {
 					d1 = d1.parseDouble(lOrdered.get(j).getPosRodada());
 					d2 = d2.parseDouble(p.getPosRodada());
-					if (d2.equals(new Double(0.0))) {
+					if (d2.equals(Double.valueOf(0.0))) {
 						lOrdered.add(p);
 						break;
 					}

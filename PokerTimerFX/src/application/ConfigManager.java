@@ -627,9 +627,9 @@ public class ConfigManager {
 			if (l1 == 0) {
 				projecaoListOrdered.add(projecaoList.get(l1));
 			} else {
-				itemLista = new Double(projecaoList.get(l1).getAtual());
+				itemLista = Double.valueOf(projecaoList.get(l1).getAtual());
 				for (int l2 = 0; l2 < projecaoListOrdered.size(); l2++) {
-					itemOrdenado = new Double(projecaoListOrdered.get(l2).getAtual());
+					itemOrdenado = Double.valueOf(projecaoListOrdered.get(l2).getAtual());
 					if (itemOrdenado.compareTo(itemLista) <= 0) {
 						projecaoListOrdered.add(l2, projecaoList.get(l1));
 						break;
@@ -639,7 +639,7 @@ public class ConfigManager {
 							projecaoListOrdered.add(l2, projecaoList.get(l1));
 							break;
 						}
-						if (itemLista.compareTo(new Double("0")) == 0) {
+						if (itemLista.compareTo(Double.valueOf("0")) == 0) {
 							projecaoListOrdered.add(projecaoList.get(l1));
 							break;
 						}
@@ -655,9 +655,9 @@ public class ConfigManager {
 		for (int k = 0; k < projecaoListOrdered.size(); k++) {
 			int h = k + 1;
 			if (h < 10)
-				projecaoListOrdered.get(k).setJogador("0" + h + "� - " + projecaoListOrdered.get(k).getJogador());
+				projecaoListOrdered.get(k).setJogador("0" + h + "o - " + projecaoListOrdered.get(k).getJogador());
 			else
-				projecaoListOrdered.get(k).setJogador(h + "� - " + projecaoListOrdered.get(k).getJogador());
+				projecaoListOrdered.get(k).setJogador(h + "o - " + projecaoListOrdered.get(k).getJogador());
 		}
 
 		return projecaoListOrdered;
@@ -845,7 +845,7 @@ public class ConfigManager {
 			String[] tmp;
 			while (line != null){
 				tmp = line.split(";");
-				mapPontuacao.put(tmp[0], new Integer(tmp[1]));
+				mapPontuacao.put(tmp[0], Integer.valueOf(tmp[1]));
 				line = reader.readLine();
 			}
 			reader.close();

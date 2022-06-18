@@ -98,14 +98,14 @@ public class Player {
 				resultados.get(i).setPontuacaoEtapa(cfg.getPontuacaoJogadorEtapa(resultados.get(i)));
 			} else {
 				for (int j = 0; j < resultadosEtapas.size(); j++) {
-					if (resultadosEtapas.get(j).compareTo(new Double(resultados.get(i).getPontuacaoEtapa())) >= 0) {
-						resultadosEtapas.add(j, new Double(resultados.get(i).getPontuacaoEtapa()));
+					if (resultadosEtapas.get(j).compareTo(Double.valueOf(resultados.get(i).getPontuacaoEtapa())) >= 0) {
+						resultadosEtapas.add(j, Double.valueOf(resultados.get(i).getPontuacaoEtapa()));
 						added = true;
 						break;
 					}
 				}
 				if (!added)
-					resultadosEtapas.add(new Double(resultados.get(i).getPontuacaoEtapa()));
+					resultadosEtapas.add(Double.valueOf(resultados.get(i).getPontuacaoEtapa()));
 			}
 			pontuacaoTotal = pontuacaoTotal + resultados.get(i).getPontuacaoEtapa();
 		}

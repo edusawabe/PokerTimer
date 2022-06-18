@@ -2334,8 +2334,8 @@ public class PokerTimerFXController implements Initializable{
 				lOrdered.add(p);
 			else {
 				for (int j = 0; j < lOrdered.size(); j++) {
-					d1 = d1.parseDouble(lOrdered.get(j).getPosRodada());
-					d2 = d2.parseDouble(p.getPosRodada());
+					d1 = Double.parseDouble(lOrdered.get(j).getPosRodada());
+					d2 = Double.parseDouble(p.getPosRodada());
 					if (d2.equals(Double.valueOf(0.0))) {
 						lOrdered.add(p);
 						break;

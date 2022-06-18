@@ -136,7 +136,7 @@ public class ProjecaoController implements Initializable {
 		String jogadorSelecionado = null;
 		try {
 			rebuys = Integer.parseInt(txQtdeRebuys.getText());
-			colocacaoProjecao = Integer.parseInt(cbColocacao.getSelectionModel().getSelectedItem().replaceAll("o", ""));
+			colocacaoProjecao = Integer.parseInt(cbColocacao.getSelectionModel().getSelectedItem().replaceAll("º", ""));
 		} catch (Exception e) {
 
 		}

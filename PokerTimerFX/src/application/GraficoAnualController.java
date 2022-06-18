@@ -61,7 +61,7 @@ public class GraficoAnualController implements Initializable{
             	@SuppressWarnings("rawtypes")
 				XYChart.Data data = ((XYChart.Data) s.getData().get(j));
 				Tooltip.install(data.getNode(), new Tooltip(
-						"Nome: " + s.getName() + "\n" + "Mes: " + data.getXValue().toString() + "\n" + "Pontuacao Acumulada: " + data.getYValue()));
+						"Nome: " + s.getName() + "\n" + "Mês: " + data.getXValue().toString() + "\n" + "Pontuação Acumulada: " + data.getYValue()));
 
                 //Adding class on hover
                 data.getNode().setOnMouseEntered(event -> data.getNode().getStyleClass().add("onHover"));

@@ -130,7 +130,7 @@ public class TimerWindowController implements Initializable{
 	}
 
 	public void setTextLbMediaFichas(String mediaFichas){
-		lbMediaFichas.setText("Media: " + mediaFichas);
+		lbMediaFichas.setText("Média: " + mediaFichas);
 	}
 
 	public void setTextLbTotalArrecadado(String totalArrecadado){
@@ -138,23 +138,23 @@ public class TimerWindowController implements Initializable{
 	}
 
 	public void setTextLbPos1(String pos1){
-		lbPos1.setText("1o: " + pos1);
+		lbPos1.setText("1º: " + pos1);
 	}
 
 	public void setTextLbPos2(String pos2){
-		lbPos2.setText("2o: " + pos2);
+		lbPos2.setText("2º: " + pos2);
 	}
 
 	public void setTextLbPos3(String pos3){
-		lbPos3.setText("3o: " + pos3);
+		lbPos3.setText("3º: " + pos3);
 	}
 
 	public void setTextLbPos4(String pos4){
-		lbPos4.setText("4o: " + pos4);
+		lbPos4.setText("4º: " + pos4);
 	}
 
 	public void setTextLbPos5(String pos5){
-		lbPos5.setText("5o: " + pos5);
+		lbPos5.setText("5º: " + pos5);
 	}
 
 	public AnchorPane getMainPane() {

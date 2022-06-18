@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -18,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#tratarEventosTeclado" onMouseMoved="#mousePainelInferior" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PokerTimerFXController">
+<AnchorPane fx:id="parent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#tratarEventosTeclado" onMouseMoved="#mousePainelInferior" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PokerTimerFXController">
    <children>
       <VBox AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -197,6 +204,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
@@ -286,8 +294,8 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="82.0" styleClass="statsLabels" stylesheets="@application.css" text="Média Fichas:" GridPane.rowIndex="12" />
-                                    <Label fx:id="statsMedia" layoutX="171.0" layoutY="177.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                                    <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="82.0" styleClass="statsLabels" stylesheets="@application.css" text="Média Fichas:" GridPane.rowIndex="13" />
+                                    <Label fx:id="statsMedia" layoutX="171.0" layoutY="177.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="13">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -297,6 +305,15 @@
                                     </Label>
                                     <Label alignment="CENTER_RIGHT" layoutX="99.0" layoutY="42.0" styleClass="statsLabels" stylesheets="@application.css" text="Add-on:" GridPane.rowIndex="2" />
                                     <Label fx:id="statsAddOn" layoutX="171.0" layoutY="42.0" styleClass="statsContents" stylesheets="@application.css" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" styleClass="statsLabels" stylesheets="@application.css" text="Bolha:" GridPane.rowIndex="11" />
+                                    <Label fx:id="statsBolha" text="Jogando" GridPane.columnIndex="1" GridPane.rowIndex="11">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -326,6 +343,11 @@
                                     <Button mnemonicParsing="false" onAction="#abrirProjecao" text="Projeções">
                                        <HBox.margin>
                                           <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button layoutX="198.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAppConfig" text="Config App">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>

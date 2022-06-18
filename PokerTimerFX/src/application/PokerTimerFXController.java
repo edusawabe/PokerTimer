@@ -49,6 +49,7 @@ import model.Round;
 import util.Constants;
 import util.DateUtil;
 import util.MailResultContent;
+import util.MailSender;
 import util.Mp3Player;
 import util.NumberMaskFormatter;
 import util.Util;
@@ -92,6 +93,8 @@ public class PokerTimerFXController implements Initializable{
 	private Label statsPremio4;
 	@FXML
 	private Label statsPremio5;
+	@FXML
+	private Label statsBolha;
 	@FXML
 	private Label statsMedia;
 	@FXML
@@ -220,6 +223,7 @@ public class PokerTimerFXController implements Initializable{
 	private final static Logger logger = Logger.getLogger(PokerTimerFXController.class);
 	private int numMesas = 0;
 	private RebuysConsolidadoController rebuysConsolidadoController;
+	private AppConfigController appConfigController = new AppConfigController();
 
 	public PokerTimerFXController() {
 		lastKey = "";
@@ -536,7 +540,7 @@ public class PokerTimerFXController implements Initializable{
 			maxMesa = (totalSize/2) + 1;
 
 		while (size > 0 ){
-			if (players > Constants.MAX_PLAYERS_FINAL_TABLE){
+			if (players > appConfigController.getFinalTableNumOfPlayers()){
 				if (llMesa1.size() < maxMesa && llMesa2.size() < maxMesa) {
 					if ((mesa % 2) == 0)
 						llMesa1.add(copyList.get(numero));
@@ -609,7 +613,7 @@ public class PokerTimerFXController implements Initializable{
 
 		while (size > 0 ){
 			//Se Existe pessoas suficientes para mais de uma mesa
-			if (players > Constants.MAX_PLAYERS_FINAL_TABLE){
+			if (players > appConfigController.getFinalTableNumOfPlayers()){
 				if(mesa < 301){
 					if (llMesa1.size() < maxMesa1){
 						llMesa1.add(copyList.get(numero));
@@ -705,7 +709,7 @@ public class PokerTimerFXController implements Initializable{
 		}
     	totalJogadoresAno = totalJogadoresAno + oListJogadores.size() + oListFora.size();
 
-    	double premioTotal = (totalJogadoresAno * Constants.SUBSCRIPTION_VALUE);
+    	double premioTotal = (totalJogadoresAno * appConfigController.getBuyin());
     	double premio1 = premioTotal * 0.45;
     	double premio2 = premioTotal * 0.25;
     	double premio3 = premioTotal * 0.15;
@@ -721,7 +725,7 @@ public class PokerTimerFXController implements Initializable{
 			// definindo a nova janela
 			Scene scene = new Scene(myPane, 900, 600);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Projecoes");
+			primaryStage.setTitle("Projeções");
 
 			lprojecaoLine = configManager.projetarResultado(oListRebuys, oListAddOn, oListFora, oListJogadores, oListFora.size() + oListJogadores.size(),0,0,"");
 			//lprojecaoLine = ordenarProjecaoRodada(lprojecaoLine);
@@ -729,7 +733,7 @@ public class PokerTimerFXController implements Initializable{
 			// obtem o controller da nova janela
 			projecaoController = fxmlLoader.<ProjecaoController> getController();
 
-			// inclui as informacoes do texto a abre a janela nova
+			// inclui as informações do texto a abre a janela nova
 			projecaoController.gettProjecao().setItems(lprojecaoLine);
 
 			projecaoController.setListProjecaoLines(lprojecaoLine);
@@ -750,7 +754,7 @@ public class PokerTimerFXController implements Initializable{
 			projecaoController.getLabelAnual().setText("R$ "+Math.round(premioTotal));
 
 			for (int i = 0; i < oListJogadores.size() + oListFora.size(); i++) {
-				projecaoController.getListComboColocacao().add((i+1) + "o");
+				projecaoController.getListComboColocacao().add((i+1) + "º");
 			}
 
 			projecaoController.getCbColocacao().getItems().addAll(projecaoController.getListComboColocacao());
@@ -826,6 +830,7 @@ public class PokerTimerFXController implements Initializable{
         mailContent.setRoundFinal(oListrRodadas.get(listRodadas.getSelectionModel().getSelectedIndex()));
         String msgHtml = mailContent.toStringCssHtml();
         String msg = mailContent.toString();
+        MailSender sender = new MailSender();
         String subject = "Resultados Etapa "+ DateUtil.getDate();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -906,7 +911,7 @@ public class PokerTimerFXController implements Initializable{
 				Player p = lOrderedPlayer.get(i);
 				pos = i + 1;
 				RankingLine r = new RankingLine();
-				r.setJogador(util.Util.completeZeros(pos, 2) + "o - " + p.getPlayerName());
+				r.setJogador(util.Util.completeZeros(pos, 2) + "º - " + p.getPlayerName());
 				r.setResult1(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(0).getColocacao()), 2)   + "/" + p.getResultados().get(0).getRebuys() + "/" + p.getResultados().get(0).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(0).getPontuacaoEtapa(),3));
 				r.setResult2(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(1).getColocacao()), 2)   + "/" + p.getResultados().get(1).getRebuys() + "/" + p.getResultados().get(1).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(1).getPontuacaoEtapa(),3));
 				r.setResult3(util.Util.completeZeros(Integer.parseInt(p.getResultados().get(2).getColocacao()), 2)   + "/" + p.getResultados().get(2).getRebuys() + "/" + p.getResultados().get(2).getAddOn() + "/" + Util.completeZerosDouble(p.getResultados().get(2).getPontuacaoEtapa(),3));
@@ -939,7 +944,7 @@ public class PokerTimerFXController implements Initializable{
 			rankingController =  fxmlLoader.<RankingController>getController();
 			rankingController.gettRanking().setItems(lRanking);
 
-			//inclui as informacoes do texto a abre a janela nova
+			//inclui as informações do texto a abre a janela nova
 			rankingController.setListRanking(lRanking);
 			primaryStage.show();
 
@@ -952,7 +957,7 @@ public class PokerTimerFXController implements Initializable{
 			//definindo a nova janela
 			Scene scene2 = new Scene(myPane2,900,600);
 			secondaryStage.setScene(scene2);
-			secondaryStage.setTitle("Ranking Anual - Grafico");
+			secondaryStage.setTitle("Ranking Anual - Gráfico");
 
 			//obtem o controller da nova janela
 			graficoController =  fxmlLoader2.<GraficoAnualController>getController();
@@ -967,14 +972,14 @@ public class PokerTimerFXController implements Initializable{
 	@FXML
 	private void addJogador(Event evt){
 		int index = 0;
-		//Verifica se jogador ja existe no combo ou e novo item (index < 0)
+		//Verifica se jogador já existe no combo ou é novo item (index < 0)
 		index = cbJogador.getItems().indexOf(cbJogador.editorProperty().get().getText());
 
 		if (index < 0 && cbJogador.editorProperty().get().getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erro");
-			alert.setHeaderText("Jogador Invalido!");
-			alert.setContentText("Nao e Permitido Incluir Jogador Sem Nome!");
+			alert.setHeaderText("Jogador Inválido!");
+			alert.setContentText("Não é Permitido Incluir Jogador Sem Nome!");
 			alert.show();
 			return;
 		}
@@ -985,7 +990,7 @@ public class PokerTimerFXController implements Initializable{
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erro");
 				alert.setHeaderText("Torneio em Andamento");
-				alert.setContentText("Torneio Ja Iniciado. Nao e mais permitido adicionar jogadores.");
+				alert.setContentText("Torneio Já Iniciado. Não é mais permitido adicionar jogadores.");
 				alert.show();
 			} else {
 				int s = painelInferiorJogadores.getChildren().size();
@@ -1054,14 +1059,14 @@ public class PokerTimerFXController implements Initializable{
 
 	private void movimentaJogador() {
 		int index = 0;
-		//Verifica se jogador ja existe no combo ou e novo item (index < 0)
+		//Verifica se jogador já existe no combo ou é novo item (index < 0)
 		index = cbJogador.getItems().indexOf(cbJogador.editorProperty().get().getText());
 
-		//Adiciona jogador no arquivo caso nao exista
+		//Adiciona jogador no arquivo caso não exista
 		configManager.addPlayer(cbJogador.editorProperty().get().getText());
 
 		//Se existe, remove jogador do combo e adiociona na lista de jogadores
-		//Senao apenas adiciona na lista de jogadores
+		//Senão apenas adiciona na lista de jogadores
 		if (index >= 0){
 			Util.addJogadorListaOrdenadamente(cbJogador.getItems().get(index), oListJogadores);
 			cbJogador.getItems().remove(index);
@@ -1082,7 +1087,7 @@ public class PokerTimerFXController implements Initializable{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erro");
 			alert.setHeaderText("Torneio em Andamento");
-			alert.setContentText("Torneio Ja Iniciado. Nao e mais permitido excluir jogadores.");
+			alert.setContentText("Torneio Já Iniciado. Não é mais permitido excluir jogadores.");
 			alert.show();
 			return;
 		} else {
@@ -1114,7 +1119,7 @@ public class PokerTimerFXController implements Initializable{
 		if(oListJogadoresMesa1.isEmpty() && oListJogadoresMesa2.isEmpty() && oListJogadoresMesa3.isEmpty() && oListFora.isEmpty()){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erro");
-			alert.setHeaderText("Mesas Nao Sorteadas");
+			alert.setHeaderText("Mesas Não Sorteadas");
 			alert.setContentText("Favor Sortear as Mesas Antes de Iniciar o Torneio.");
 			alert.show();
 			return;
@@ -1206,7 +1211,7 @@ public class PokerTimerFXController implements Initializable{
 		}
 		restartTimer();
 		if(roundList.get(currentRound).isBreakRound()){
-			if(oListJogadores.size() > Constants.MAX_PLAYERS_FINAL_TABLE){
+			if(oListJogadores.size() > appConfigController.getFinalTableNumOfPlayers()){
             	Alert al = new Alert(AlertType.CONFIRMATION);
         		al.setTitle("Realizar Novo Sorteio de Mesas?");
         		al.setContentText("Round de Break. Deseja realizar um novo sorteio de Mesas?");
@@ -1239,11 +1244,11 @@ public class PokerTimerFXController implements Initializable{
 					cont++;
 				}
 			}
-			if(cont == Constants.MAX_REBUY){
+			if(cont == appConfigController.getRebuyLimit()){
 				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Maximo de Rebuys Atingido!");
-				alert.setHeaderText("Quantidade de Rebuys Maxima Atingida!");
-				alert.setContentText("Rebuy nao permitido. Quantidade Maxima Atingida!");
+				alert.setTitle("Máximo de Rebuys Atingido!");
+				alert.setHeaderText("Quantidade de Rebuys Máxima Atingida!");
+				alert.setContentText("Rebuy não permitido. Quantidade Máxima Atingida!");
 				alert.show();
 				return;
 			} else {
@@ -1275,9 +1280,9 @@ public class PokerTimerFXController implements Initializable{
 			}
 			if(cont == 1){
 				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Maximo de Add-On Atingido!");
-				alert.setHeaderText("Quantidade de Rebuys Maxima Atingida!");
-				alert.setContentText("Add-On nao permitido. Quantidade Maxima Atingida!");
+				alert.setTitle("Máximo de Add-On Atingido!");
+				alert.setHeaderText("Quantidade de Rebuys Máxima Atingida!");
+				alert.setContentText("Add-On não permitido. Quantidade Máxima Atingida!");
 				alert.show();
 				return;
 			} else {
@@ -1401,9 +1406,9 @@ public class PokerTimerFXController implements Initializable{
 			size2 = oListJogadoresMesa2.size();
 			size3 = oListJogadoresMesa3.size();
 
-			//Valida se existia 3 mesas e nao precisa mais de 3 meses
+			//Valida se existia 3 mesas e não precisa mais de 3 meses
 			if(numMesas == 3){
-				//Realiza o Sorteio Novamente pois nao precisa mais de Duas Mesas
+				//Realiza o Sorteio Novamente pois não precisa mais de Duas Mesas
 				if (oListJogadores.size() == Constants.MAX_PLAYERS_2_TABLE){
 					sortear2Mesas();
 					Alert al2Mesa = new Alert(AlertType.INFORMATION);
@@ -1420,7 +1425,7 @@ public class PokerTimerFXController implements Initializable{
 			}
 
 			//tratamento para sorteio da mesa final
-			if (oListJogadores.size() == Constants.MAX_PLAYERS_FINAL_TABLE){
+			if (oListJogadores.size() == appConfigController.getFinalTableNumOfPlayers()){
 				oListJogadoresMesa1.clear();
 				oListJogadoresMesa2.clear();
 				oListJogadoresMesa3.clear();
@@ -1446,9 +1451,9 @@ public class PokerTimerFXController implements Initializable{
 
 			// verfica se existe necessidade de balancear jogadores
 			if (size1 > 0 && size2 > 0 && size3 > 0) {
-				//tratamento de eliminacoo por mesa
+				//tratamento de eliminação por mesa
 				switch (mesa) {
-				// eliminacao ocorrendo na mesa 1 - Se balancear Destino e a
+				// eliminacao ocorrendo na mesa 1 - Se balancear Destino é a
 				// Mesa 1
 				case 1:
 					if (size2 > size3) {
@@ -1466,7 +1471,7 @@ public class PokerTimerFXController implements Initializable{
 						}
 					}
 					break;
-				// eliminacao ocorrendo na mesa 2 - Se balancear Destino e a
+				// eliminacao ocorrendo na mesa 2 - Se balancear Destino é a
 				// Mesa 2
 				case 2:
 					if (size1 > size3) {
@@ -1484,7 +1489,7 @@ public class PokerTimerFXController implements Initializable{
 						}
 					}
 					break;
-				// eliminacao ocorrendo na mesa 2 - Se balancear Destino e a
+				// eliminacao ocorrendo na mesa 2 - Se balancear Destino é a
 				// Mesa 3
 				case 3:
 					if (size1 > size2) {
@@ -1515,11 +1520,11 @@ public class PokerTimerFXController implements Initializable{
 				}
 				// balanceando jogadores
 				if (diferenca > 1) {
-					// se jogador eliminado e da mesa 2
+					// se jogador eliminado é da mesa 2
 					if (mesa == 2) {
 						balanceTables(posicaoEliminacao, 1, 2, size1, eliminado, oListJogadoresMesa1, oListJogadoresMesa2, listMesa2);
 					} else {
-						// se jogador eliminado e da mesa 1
+						// se jogador eliminado é da mesa 1
 						// obtem jogador da mesa 2 a ser trocado
 						balanceTables(posicaoEliminacao, 2, 1, size2, eliminado, oListJogadoresMesa2, oListJogadoresMesa1, listMesa1);
 					}
@@ -1547,13 +1552,13 @@ public class PokerTimerFXController implements Initializable{
 		Random gerador = new Random();
 		Alert al = new Alert(AlertType.INFORMATION);
 
-		// se jogador eliminado e da mesa 1
+		// se jogador eliminado é da mesa 1
 		// obtem jogador da mesa 2 a ser trocado
 		int posicaoTroca = gerador.nextInt(sizeMesaOrigem);
 		String jogadorReposicionado = olOrigem.get(posicaoTroca);
 
 		al.setContentText("Trocar de Mesa!" + "\n" + " - Jogador Da Mesa " + mesaOrigem + ":\n   " + jogadorReposicionado
-				+ "\nIr para Mesa "+mesaDestino+": " + "\n  - Na posicoo em que estava:\n  " + eliminado);
+				+ "\nIr para Mesa "+mesaDestino+": " + "\n  - Na posição em que estava:\n  " + eliminado);
 		olDestino.add(posicaoEliminacao, olOrigem.get(posicaoTroca));
 		olOrigem.remove(posicaoTroca);
 		listJogadores.getSelectionModel().clearSelection();
@@ -1611,7 +1616,7 @@ public class PokerTimerFXController implements Initializable{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erro");
 			alert.setHeaderText("Selecionar Jogador");
-			alert.setContentText("Favor Selecionar Jogador a Cancelar Eliminacoo");
+			alert.setContentText("Favor Selecionar Jogador a Cancelar Eliminação");
 			alert.show();
 		}
 		else{
@@ -1674,34 +1679,7 @@ public class PokerTimerFXController implements Initializable{
 				Util.addJogadorListaOrdenadamente(lp.get(i).getPlayerName(), oListComboJogador);
 		}
 
-		//Define a lista de rounds do Torneio
-		roundList = new LinkedList<Round>();
-		roundManager = new RoundManager();
-		//construindo lista de rounds
-		roundManager.setRoundList(roundList);
-		roundManager.setRoundListValues();
-
-		//Definindo CellFactory da Listview das Rodadas
-		listRodadas.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-			@Override
-			public ListCell<String> call(ListView<String> param) {
-				return new MyListCell();
-			}
-		});
-
-		//Alimentando valores na lista de rodadas
-		for (int i = 0; i < roundList.size(); i++) {
-			oListrRodadas.add(roundList.get(i).getRoundName());
-		}
-
-		currentRound = 0;
-		listRodadas.setItems(oListrRodadas);
-		listRodadas.getSelectionModel().select(currentRound);
-
-		//Desabilita edicoo e selecoo da lista de rodadas
-		listRodadas.setEditable(false);
-		//listRodadas.setMouseTransparent(true);
-		//listRodadas.setFocusTraversable(false);
+		updateRoundList();
 
 		//Define Demais Listas
 		listJogadores.setItems(oListJogadores);
@@ -1722,6 +1700,7 @@ public class PokerTimerFXController implements Initializable{
         seconds = 0;
         minutes = roundList.get(listRodadas.getSelectionModel().getSelectedIndex()).getMinutes();
         maxRound = minutes * Constants.SECONDS_IN_MINUTE;
+        currentRound = 0;
 
         cbJogador.setItems(oListComboJogador);
         cbJogador.setPromptText("Jogador");
@@ -1777,6 +1756,41 @@ public class PokerTimerFXController implements Initializable{
 			} catch(Exception e){
 				e.printStackTrace();
 			}
+		loadAppConfig(null);
+	}
+
+	private void updateRoundList() {
+		//Define a lista de rounds do Torneio
+		roundList = new LinkedList<Round>();
+		roundManager = new RoundManager();
+		//construindo lista de rounds
+		roundManager.setRoundList(roundList);
+		roundManager.setRoundListValues();
+
+		if (roundList.size() > 0){
+			oListrRodadas.clear();
+		}
+
+		//Definindo CellFactory da Listview das Rodadas
+		listRodadas.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+			@Override
+			public ListCell<String> call(ListView<String> param) {
+				return new MyListCell();
+			}
+		});
+
+		//Alimentando valores na lista de rodadas
+		for (int i = 0; i < roundList.size(); i++) {
+			oListrRodadas.add(roundList.get(i).getRoundName());
+		}
+
+		listRodadas.setItems(oListrRodadas);
+		listRodadas.getSelectionModel().select(currentRound);
+
+		//Desabilita edição e seleção da lista de rodadas
+		listRodadas.setEditable(false);
+		//listRodadas.setMouseTransparent(true);
+		//listRodadas.setFocusTraversable(false);
 	}
 
     private void setRound(){
@@ -1861,6 +1875,7 @@ public class PokerTimerFXController implements Initializable{
     }
 
 	private void timerAction() {
+		updateRoundList();
 		if (!paused && play){
 			if (seconds == 17 && minutes == 0) {
 				playCountdown();
@@ -1888,7 +1903,7 @@ public class PokerTimerFXController implements Initializable{
 					setCurrentRound();
 					currentSecond = 0;
 					if(roundList.get(currentRound).isBreakRound()){
-						if(oListJogadores.size() > Constants.MAX_PLAYERS_FINAL_TABLE){
+						if(oListJogadores.size() > appConfigController.getFinalTableNumOfPlayers()){
 			        		Platform.runLater(new Runnable() {
 
 								@Override
@@ -2092,9 +2107,9 @@ public class PokerTimerFXController implements Initializable{
         statsRebuys.setText("" + totalRebuy);
         statsAddOn.setText("" + totalAddOn);
 
-        totalArrecadado = ((totalJogadores * Constants.BUY_IN_VALUE)
-                + (totalRebuy * Constants.REBUY_VALUE)
-                + (totalAddOn * Constants.REBUY_VALUE));
+        totalArrecadado = ((totalJogadores * appConfigController.getBuyin())
+                + (totalRebuy * appConfigController.getRebuy())
+                + (totalAddOn * appConfigController.getRebuy()));
         statsTotalArrecadado.setText("R$ " + totalArrecadado);
 
         double total1 = 0;
@@ -2102,51 +2117,50 @@ public class PokerTimerFXController implements Initializable{
         double total3 = 0;
         double total4 = 0;
         double total5 = 0;
+        double bolha = 0;
 
-        switch (totalJogadores){
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                total1 = totalArrecadado * 0.65;
-                total2 = totalArrecadado * 0.35;
-                break;
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-                total1 = totalArrecadado * 0.55;
-                total2 = totalArrecadado * 0.30;
-                total3 = totalArrecadado * 0.15;
-                break;
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-                total1 = totalArrecadado * 0.50;
-                total2 = totalArrecadado * 0.25;
-                total3 = totalArrecadado * 0.15;
-                total4 = totalArrecadado * 0.10;
-                break;
-            default:
-                total1 = totalArrecadado * 0.45;
-                total2 = totalArrecadado * 0.25;
-                total3 = totalArrecadado * 0.15;
-                total4 = totalArrecadado * 0.10;
-                total5 = totalArrecadado * 0.05;
-                break;
+        if (appConfigController.getPremio1()>= 1.0) {
+        	total1 = appConfigController.getPremio1() ;
+        } else {
+        	total1 = totalArrecadado * appConfigController.getPremio1();
         }
+
+        if (appConfigController.getPremio2() >= 1.0) {
+        	total2 = appConfigController.getPremio2() ;
+        } else {
+        	total2 = totalArrecadado * appConfigController.getPremio2();
+        }
+
+        if (appConfigController.getPremio3() >= 1.0) {
+        	total3 = appConfigController.getPremio3() ;
+        } else {
+        	total3 = totalArrecadado * appConfigController.getPremio3();
+        }
+
+        if (appConfigController.getPremio4() >= 1.0) {
+        	total4 = appConfigController.getPremio4() ;
+        } else {
+        	total4 = totalArrecadado * appConfigController.getPremio4();
+        }
+
+        if (appConfigController.getPremio5() >= 1.0) {
+        	total5 = appConfigController.getPremio5() ;
+        } else {
+        	total5 = totalArrecadado * appConfigController.getPremio5();
+        }
+
+        if (appConfigController.getBolha() >= 1.0) {
+        	bolha = appConfigController.getBolha() ;
+        } else {
+        	bolha = totalArrecadado * appConfigController.getBolha();
+        }
+
         total1l = Math.round(total1);
         total2l = Math.round(total2);
         total3l = Math.round(total3);
         total4l = Math.round(total4);
         total5l = Math.round(total5);
+        bolha = Math.round(bolha);
 
         statsTotalArrecadado.setText("R$ " + totalArrecadado);
         statsPremio1.setText("R$ " + total1l);
@@ -2154,19 +2168,20 @@ public class PokerTimerFXController implements Initializable{
         statsPremio3.setText("R$ " + total3l);
         statsPremio4.setText("R$ " + total4l);
         statsPremio5.setText("R$ " + total5l);
+        statsBolha.setText("R$ " + bolha);
         if (totalJogando > 0)
-        	statsMedia.setText(NumberMaskFormatter.formatMask(((totalJogadores + totalRebuy) * Constants.STACK + (totalAddOn * (2 * Constants.STACK))) /totalJogando));
+        	statsMedia.setText(NumberMaskFormatter.formatMask(((totalJogadores + totalRebuy) * appConfigController.getStack() + (totalAddOn * appConfigController.getStack())) /totalJogando));
 
         if(timerWindowController != null){
 	        timerWindowController.getLbTimer().setText(lbTimer.getText());
 	        timerWindowController.getPbProgress().setProgress(timerBar.getProgress());
 			timerWindowController.getLbBlindsAtual().setText(
 					"Atual: " + smallAtual.getText() + "/" + bigAtual.getText() + " Ante: " + valorAnteAtual.getText());
-			timerWindowController.getLbBlindsProxima().setText("Proxima: " + smallSeguinte.getText() + "/"
+			timerWindowController.getLbBlindsProxima().setText("Próxima: " + smallSeguinte.getText() + "/"
 					+ bigSeguinte.getText() + " Ante: " + valorAnteSeguinte.getText());
 			timerWindowController.getLbProxBreak().setText(lbProximoBreak.getText());
 	        if(currentRound > Constants.LAST_BREAK_ROUND)
-	        	timerWindowController.getLbProxBreak().setText("Proximo Break: ");
+	        	timerWindowController.getLbProxBreak().setText("Próximo Break: ");
 	        timerWindowController.setTextLbJogando(statsJogando.getText());
 	        timerWindowController.setTextLbRebuys(statsRebuys.getText());
 	        timerWindowController.setTextLbFora(statsFora.getText());
@@ -2246,7 +2261,7 @@ public class PokerTimerFXController implements Initializable{
 			//obtem o controller da nova janela
 			rebuysConsolidadoController =  fxmlLoaderLista.<RebuysConsolidadoController>getController();
 
-			//inclui as informacoes do texto a abre a janela nova
+			//inclui as informações do texto a abre a janela nova
 			rebuysConsolidadoController.setOlRebuysConsolidado(olRebuysConsolidado);
 			rebuysConsolidadoController.getTvRebuysConsolidado().setItems(olRebuysConsolidado);
 			rebuysConsolidadoController.getOlRebuysConsolidado();
@@ -2341,7 +2356,7 @@ public class PokerTimerFXController implements Initializable{
 		}
 		l.clear();
 		for (int i = 0; i < lOrdered.size(); i++) {
-			lOrdered.get(i).setPosRodada(Util.completeZeros(i+1, 2) + "o/" + lOrdered.get(i).getPosRodada());
+			lOrdered.get(i).setPosRodada(Util.completeZeros(i+1, 2) + "º/" + lOrdered.get(i).getPosRodada());
 			l.add(lOrdered.get(i));
 		}
 		return l;
@@ -2424,6 +2439,27 @@ public class PokerTimerFXController implements Initializable{
 	         }
 	     }
 	 }
+
+	@FXML
+	private void loadAppConfig(Event evt){
+		//obtem Loader
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AppConfig.fxml"));
+		Stage primaryStageTimer  = new Stage();
+		try {
+			//carrega o loader
+			Pane myPane = (Pane) fxmlLoader.load();
+			// obtem o controller da nova janela
+			appConfigController = fxmlLoader.<AppConfigController> getController();
+			// definindo a nova janela
+			Scene scene = new Scene(myPane, 800, 600);
+			primaryStageTimer.setScene(scene);
+			primaryStageTimer.setTitle("App Config");
+			primaryStageTimer.show();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+	}
+
 
 	public ObservableList<String> getoListRebuys() {
 		return oListRebuys;

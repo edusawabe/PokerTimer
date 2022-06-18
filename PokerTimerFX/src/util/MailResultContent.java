@@ -216,7 +216,7 @@ public class MailResultContent {
         "				   </tr>	\n" +
         "				   <tr>\n" +
         "				   	   <td>\n" +
-        "					   Premiacao 1o\n" +
+        "					   Premiação 1º\n" +
         "					   </td>\n" +
         "					   <td>\n" +
         "					   "+getPremio1()+"\n" +
@@ -224,7 +224,7 @@ public class MailResultContent {
         "				   </tr>					   \n" +
         "				   <tr>\n" +
         "				   	   <td>\n" +
-        "					   Premiacao 2o\n" +
+        "					   Premiação 2º\n" +
         "					   </td>\n" +
         "					   <td>\n" +
         "					   "+premio2+"\n" +
@@ -232,7 +232,7 @@ public class MailResultContent {
         "				   </tr>					   \n" +
         "				   <tr>\n" +
         "				   	   <td>\n" +
-        "					   Premiacao 3o\n" +
+        "					   Premiação 3º\n" +
         "					   </td>\n" +
         "					   <td>\n" +
         "					   "+premio3+"\n" +
@@ -240,7 +240,7 @@ public class MailResultContent {
         "				   </tr>					   \n" +
         "				   <tr>\n" +
         "				   	   <td>\n" +
-        "					   Premiacao 4o\n" +
+        "					   Premiação 4º\n" +
         "					   </td>\n" +
         "					   <td>\n" +
         "					   "+premio4+"\n" +
@@ -248,7 +248,7 @@ public class MailResultContent {
         "				   </tr>					   \n" +
         "				   <tr>\n" +
         "				   	   <td>\n" +
-        "					   Premiacao 5o\n" +
+        "					   Premiação 5º\n" +
         "					   </td>\n" +
         "					   <td>\n" +
         "					   "+premio5+"\n" +
@@ -273,7 +273,7 @@ public class MailResultContent {
         "			<div class=\"panel-bottom\"></div>		\n" +
         "		</div>		\n" +
         "		<div class=\"panel\">\n" +
-        "			<h1>Eliminacoe</h1>\n" +
+        "			<h1>Eliminaçõe</h1>\n" +
         "			<ol>\n" +
         "                          "+outsList+
         "			</ol>	\n" +
@@ -391,7 +391,7 @@ public class MailResultContent {
         "				   </tr>	\n" +
         "				   <tr>\n" +
         "				   	   <td>\n" +
-        "					   Premiacao 1o\n" +
+        "					   Premiação 1º\n" +
         "					   </td>\n" +
         "					   <td>\n" +
         "					   "+getPremio1()+"\n" +
@@ -472,7 +472,7 @@ public class MailResultContent {
         ret = ret + "<P>Jogadores           : " + outs.size() + "</P>";
         ret = ret + "<P>Rebuys              : " + rebuys + "</P>";
         ret = ret + "<P>Total Arrecadado    : " + arrecadado + "</P>";
-        ret = ret + "<P>Premiacao 1o        : " + getPremio1() + "</P>";
+        ret = ret + "<P>Premiação 1o        : " + getPremio1() + "</P>";
         ret = ret + "<P>PremiaÃ§Ã£o 2o        : " + premio2 + "</P>";
         ret = ret + "<P>PremiaÃ§Ã£o 3o        : " + premio3 + "</P>";
         ret = ret + "<P>PremiaÃ§Ã£o 4o        : " + premio4 + "</P>";
@@ -538,11 +538,11 @@ ret +
         ret = ret + "Rebuys              : " + rebuys + "\n";
         ret = ret + "addOn               : " + addOns + "\n";
         ret = ret + "Total Arrecadado    : " + arrecadado + "\n";
-        ret = ret + "Premiacao 1o        : " + getPremio1() + "\n";
-        ret = ret + "Premiacao 2o        : " + premio2 + "\n";
-        ret = ret + "Premiacao 3o        : " + premio3 + "\n";
-        ret = ret + "Premiacao 4o        : " + premio4 + "\n";
-        ret = ret + "Premiacao 5o        : " + premio5 + "\n";
+        ret = ret + "Premiação 1o        : " + getPremio1() + "\n";
+        ret = ret + "Premiação 2o        : " + premio2 + "\n";
+        ret = ret + "Premiação 3o        : " + premio3 + "\n";
+        ret = ret + "Premiação 4o        : " + premio4 + "\n";
+        ret = ret + "Premiação 5o        : " + premio5 + "\n";
         ret = ret + "Ultimo Round        : " + getRoundFinal() + "\n";
         ret = ret + "*********************************************************\n";
         ret = ret + "Lista de Rebuys     : " + "\n";
@@ -562,7 +562,7 @@ ret +
         	}
         }
         ret = ret + "*********************************************************\n";
-        ret = ret + "Lista de Eliminacoes: " + "\n";
+        ret = ret + "Lista de Eliminações: " + "\n";
         for (int i = 0; i < outs.size(); i++) {
             ret = ret + "   - " + (i+1) +" "+ outs.get(i) + "\n";
         }

@@ -43,7 +43,7 @@ public class RoundManager {
 
 		for (String[] sRound : lRounds) {
 			round = new Round();
-			//Linha de definicao de rodada
+			//Linha de definição de rodada
 			if(sRound.length > 2){
 				round.setSmallBlind(Integer.parseInt(sRound[1]));
 				round.setBigBlind(Integer.parseInt(sRound[2]));

@@ -2234,44 +2234,6 @@ public class PokerTimerFXController implements Initializable{
 
 	@FXML
 	private void btListaRebuyConsolidadoAction(Event evt){
-/*
-		//obtem Loader
-    	FXMLLoader fxmlLoaderLista = new FXMLLoader(getClass().getResource("RebuysConsolidado.fxml"));
-    	Stage primaryStage  = new Stage();
-		try {
-			//carrega o loader
-			Pane myPane = (Pane) fxmlLoaderLista.load();
-
-			ObservableList<RebuysConsolidadoLine> olRebuysConsolidado = FXCollections.observableArrayList();
-
-			olRebuysConsolidado.add(new RebuysConsolidadoLine());
-			olRebuysConsolidado.get(0).setNome("Teste");
-			olRebuysConsolidado.get(0).setRebuys("2");
-			olRebuysConsolidado.get(0).setPago("false");
-
-			olRebuysConsolidado.add(new RebuysConsolidadoLine());
-			olRebuysConsolidado.get(0).setNome("Teste2");
-			olRebuysConsolidado.get(0).setRebuys("3");
-			olRebuysConsolidado.get(0).setPago("false");
-
-			//obtem o controller da nova janela
-			rebuysConsolidadoController =  fxmlLoaderLista.<RebuysConsolidadoController>getController();
-
-			//inclui as informacoes do texto a abre a janela nova
-			rebuysConsolidadoController.setOlRebuysConsolidado(olRebuysConsolidado);
-			rebuysConsolidadoController.getTvRebuysConsolidado().setItems(olRebuysConsolidado);
-			rebuysConsolidadoController.getOlRebuysConsolidado();
-			//definindo a nova janela
-			Scene scene = new Scene(myPane);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Lista de Rebuys Consolidada");
-			primaryStage.show();
-
-
-			} catch(Exception e){
-				e.printStackTrace();
-			}
-	*/
 		LinkedList<String> lRebuys = new LinkedList<String>();
 		LinkedList<String> lAddOn = new LinkedList<String>();
 		int contRebuys;
@@ -2310,13 +2272,6 @@ public class PokerTimerFXController implements Initializable{
 		alert.setHeight(600);
 		alert.setResizable(true);
 		alert.show();
-		/*
-        try {
-			sender.sendMail(subject, msgHtml, configManager.getMailList(), true);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 
 	public ObservableList<ProjecaoLine> ordenarProjecaoRodada(ObservableList<ProjecaoLine> l) {

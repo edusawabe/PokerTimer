@@ -16,7 +16,7 @@ public class ExcelRankingGenerator {
 
 	public void generateExcel() {
 		double pontuacao;
-		excelManager.setFileName("./RankingPontuação.xlsx");
+		excelManager.setFileName("./RankingPontuacao.xlsx");
 		excelManager.getlConlumns().clear();
 		excelManager.getlRowValue().clear();
 
@@ -56,23 +56,23 @@ public class ExcelRankingGenerator {
 		excelManager.getlConlumns().add("Jogador");
 		excelManager.getlConlumns().add("Total Premio");
 		excelManager.getlConlumns().add("Total Gasto");
-		excelManager.getlConlumns().add("Pontuação Total");
+		excelManager.getlConlumns().add("Pontuacao Total");
 		excelManager.getlConlumns().add("Total Rebuys");
 		excelManager.getlConlumns().add("Total AddOn");
-		excelManager.getlConlumns().add("Max Rebuy no Mês");
-		excelManager.getlConlumns().add("Média Rebuy");
+		excelManager.getlConlumns().add("Max Rebuy no Mes");
+		excelManager.getlConlumns().add("Media Rebuy");
 		excelManager.getlConlumns().add("Meses com Rebuy");
 		excelManager.getlConlumns().add("Vezes na Final Table");
-		excelManager.getlConlumns().add("Qtde 1º");
-		excelManager.getlConlumns().add("Qtde 2º");
-		excelManager.getlConlumns().add("Qtde 3º");
-		excelManager.getlConlumns().add("Qtde 4º");
-		excelManager.getlConlumns().add("Qtde 5º");
+		excelManager.getlConlumns().add("Qtde 1o");
+		excelManager.getlConlumns().add("Qtde 2o");
+		excelManager.getlConlumns().add("Qtde 3o");
+		excelManager.getlConlumns().add("Qtde 4o");
+		excelManager.getlConlumns().add("Qtde 5o");
 		excelManager.getlConlumns().add("Qtde Top 3");
-		excelManager.getlConlumns().add("Maior Pontuação");
-		excelManager.getlConlumns().add("Menor Pontuação");
-		excelManager.getlConlumns().add("2ª Menor Pontuação");
-		excelManager.getlConlumns().add("Media Pontuação");
+		excelManager.getlConlumns().add("Maior Pontuacao");
+		excelManager.getlConlumns().add("Menor Pontuacao");
+		excelManager.getlConlumns().add("2a Menor Pontuacao");
+		excelManager.getlConlumns().add("Media Pontuacao");
 		excelManager.getlConlumns().add("Qtde Falta");
 
 

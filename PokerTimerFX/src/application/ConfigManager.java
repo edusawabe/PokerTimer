@@ -472,16 +472,16 @@ public class ConfigManager {
 		boolean jogando = false;
 		double soma = 0;
 
-		// Faz a leitura dos jogadores do arquivo de configuração
+		// Faz a leitura dos jogadores do arquivo de configuraï¿½ï¿½o
 		getPlayers();
 		// seta a lista com os jogadores lidos
 		LinkedList<Player> lPlayer = getListPlayer();
 
 		double projecao = 0;
-		// Pega cada jogador do arquivo de configuração
-		// verificar se está jogando
+		// Pega cada jogador do arquivo de configuraï¿½ï¿½o
+		// verificar se estï¿½ jogando
 		// quantidade de rebuys dele
-		// e a posição atual
+		// e a posiï¿½ï¿½o atual
 		for (int l = 0; l < lPlayer.size(); l++) {
 			Player p = lPlayer.get(l);
 			ArrayList<ResultadoRodada> aResults = p.getResultados();
@@ -600,7 +600,7 @@ public class ConfigManager {
 				}
 			}
 			if(jogando){
-				pl.setNestaRodada(Util.completeZeros(posAtual, 2) + "º" + " / "
+				pl.setNestaRodada(Util.completeZeros(posAtual, 2) + "ï¿½" + " / "
 						+ getPontuacaoJogadorEtapa(totalJogadores, posAtual, oListRebuys.size(), oListAddOn.size()));
 				soma = getPontuacaoJogadorEtapa(totalJogadores, posAtual, oListRebuys.size(), oListAddOn.size());
 				soma = soma + p.getPontuacaoTotal();
@@ -655,9 +655,9 @@ public class ConfigManager {
 		for (int k = 0; k < projecaoListOrdered.size(); k++) {
 			int h = k + 1;
 			if (h < 10)
-				projecaoListOrdered.get(k).setJogador("0" + h + "º - " + projecaoListOrdered.get(k).getJogador());
+				projecaoListOrdered.get(k).setJogador("0" + h + "ï¿½ - " + projecaoListOrdered.get(k).getJogador());
 			else
-				projecaoListOrdered.get(k).setJogador(h + "º - " + projecaoListOrdered.get(k).getJogador());
+				projecaoListOrdered.get(k).setJogador(h + "ï¿½ - " + projecaoListOrdered.get(k).getJogador());
 		}
 
 		return projecaoListOrdered;
@@ -709,10 +709,10 @@ public class ConfigManager {
 
 	/*
 	 * Pontos = A + B + C + D
-			A: Pontos pela posição inversa:
-				( 3 * qtde de jogadores ) – ( 3 * (posição-1) )
-			B: Pontos pelo prêmio recebido
-				( 0,6 * prêmio recebido em dinheiro )
+			A: Pontos pela posiï¿½ï¿½o inversa:
+				( 3 * qtde de jogadores ) ï¿½ ( 3 * (posiï¿½ï¿½o-1) )
+			B: Pontos pelo prï¿½mio recebido
+				( 0,6 * prï¿½mio recebido em dinheiro )
 			C: Cada um dos 8 jogadores da mesa final ganha 20 pontos
 			D: Cada Rebuy realizado vale -15 pontos
 	 */
@@ -748,7 +748,7 @@ public class ConfigManager {
 		double resultado = 0;
 
 		if (pos > 0){
-			// A Pontos pela posição inversa:
+			// A Pontos pela posiï¿½ï¿½o inversa:
 			resultado = ((5 * qtdJogadores) - (5 * (pos - 1)));
 
 			// C Bonus Mesa Final:
@@ -829,8 +829,8 @@ public class ConfigManager {
 	}
 
 	/*
-	 * Nova regra de pontuação 2021
-	 * Pontuacao fixa por posição mais a quantidade de pessoas na rodada
+	 * Nova regra de pontuacao 2021
+	 * Pontuacao fixa por posicao mais a quantidade de pessoas na rodada
 	 */
 	public double getPontuacaoJogadorEtapa(int qtdeJogadores, int posicao, int qtdeRebuys, int qtdeAddOn){
 		double resultado = 0;
@@ -865,10 +865,10 @@ public class ConfigManager {
 
 	/*
 	 * Pontos = A + B + C + D
-			A: Pontos pela posição inversa:
-				( 3 * qtde de jogadores ) – ( 3 * (posição-1) )
-			B: Pontos pelo prêmio recebido
-				( 0,6 * prêmio recebido em dinheiro )
+			A: Pontos pela posicao inversa:
+				( 3 * qtde de jogadores ) + ( 3 * (posicao-1) )
+			B: Pontos pelo premio recebido
+				( 0,6 * premio recebido em dinheiro )
 			C: Cada um dos 8 jogadores da mesa final ganha 20 pontos
 			D: Cada Rebuy realizado vale -15 pontos
 	 */

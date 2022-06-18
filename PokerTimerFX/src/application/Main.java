@@ -18,7 +18,7 @@ public class Main extends Application {
 			Pane myPane = (Pane)FXMLLoader.load(getClass().getResource("PokerTimerFX.fxml"));
 			Scene scene = new Scene(myPane,1024,600);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Poker Timer 2021 V13.0");
+			primaryStage.setTitle("Poker Timer 2022 V14.0");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

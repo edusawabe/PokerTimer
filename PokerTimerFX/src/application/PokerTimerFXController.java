@@ -2229,9 +2229,7 @@ public class PokerTimerFXController implements Initializable{
 
 	@FXML
 	private void mousePainelInferior(Event evt){
-/*		hidePainelInferior = 0;
-		hbInferior.setPrefHeight(HBox.USE_COMPUTED_SIZE);
-		lbTimer.setFont(lbTimer.getFont().font("System", FontWeight.BOLD, 130));*/
+
 	}
 
 	@FXML
